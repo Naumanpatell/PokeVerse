@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Pokeverse </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+        <h1>Search for a Pokémon</h1>
+
+        <form method="POST">
+            <input type="text" name="pokemon_name" placeholder="Enter Pokémon name" required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if pokemon_info %}
+        <div class="pokemon-info">
+            <h2>{{ pokemon_info["name"] | capitalize }}</h2>
+            <img src="{{ pokemon_info['sprites']['front_default'] }}" alt="{{ pokemon_info['name'] }} sprite">
+
+            <div class="details">
+                <p><strong>Height:</strong> {{ pokemon_info['height'] }} decimeters</p>
+                <p><strong>Weight:</strong> {{ pokemon_info['weight'] }} hectograms</p>
+                <p><strong>Types:</strong> {{ pokemon_info["types"] | map(attribute='type.name') | join(', ') }}</p>
+                <p><strong>Abilities:</strong> {{ pokemon_info["abilities"] | map(attribute='ability.name') | join(', ') }}</p>
+
+                <h3>Stats:</h3>
+                <ul>
+                    {% for stat in pokemon_info['stats'] %}
+                    <li>{{ stat['stat']['name'] | capitalize }}: {{ stat['base_stat'] }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h3>Moves:</h3>
+                <ul>
+                    {% for move in pokemon_info['moves'][:5] %}
+                    <li>{{ move['move']['name'] }}</li>
+                    {% endfor %}
+                </ul>
+
+                
+            </div>
+        </div>
+        {% elif request.method == 'POST' %}
+        <p>Sorry, Pokémon not found. Please try another name.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
