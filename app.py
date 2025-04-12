@@ -20,7 +20,11 @@ def index():
     if request.method == "POST":
         pokemon_name = request.form["pokemon_name"].lower()
         pokemon_info = Pokeverse(pokemon_name)
-    return render_template("home.html", pokemon_info=pokemon_info)
+        pokemon_types = [t["type"]["name"] for t in pokemon_info["types"]]
+        primary_type = pokemon_types[0] if pokemon_types else "normal"
+    return render_template("home.html", pokemon_info=pokemon_info, primary_type=primary_type)
+
+    
 
 if __name__ == "__main__":
     app.run(debug=True,host="0.0.0.0")

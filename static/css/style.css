@@ -7,34 +7,128 @@
   background-color: black;
   height: 4rem;
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
-  border-bottom: 2px solid red;
 }
 
 .navbar-container {
   display: flex;
   align-items: center;
   padding-left: 1rem;
+  
+}
+.pokeball-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0; /* Keep it behind content */
 }
 
-/* === LOGO IMAGE === */
+.pokeball-fall {
+  position: absolute;
+  top: -50px;
+  width: 40px;
+  animation: fall 2s linear 2;
+  opacity: 0.8;
+}
+
+/* Different delays for variety */
+.delay1 {
+  left: 10%;
+  animation-delay: 0.1s;
+}
+.delay2 {
+  left: 20%;
+  animation-delay: 0.1s;
+}
+.delay3 {
+  left: 30%;
+  animation-delay: 0.05s;
+}
+.delay4 {
+  left: 40%;
+  animation-delay: 0.1s;
+}
+.delay5 {
+  left: 50%;
+  animation-delay: 0.1s;
+}
+.delay6 {
+  left: 60%;
+  animation-delay: 0.1s;
+}
+.delay7 {
+  left: 70%;
+  animation-delay: 0.1s;
+}
+.delay8 {
+  left: 80%;
+  animation-delay: 0.1s;
+}
+.delay9 {
+  left: 90%;
+  animation-delay: 0.1s;
+}
+.delay10 {
+  left: 15%;
+  animation-delay: 0.1s;
+}
+.delay11{
+  left: 25%;
+  animation-delay: 0.1s;
+}
+.delay12{
+  left: 35%;
+  animation-delay: 0.1s;
+}
+.delay13 {
+  left: 45%;
+  animation-delay: 0.1s;
+}
+.delay14 {
+  left: 55%;
+  animation-delay: 0.1s;
+}
+.delay15 {
+  left: 65%;
+  animation-delay: 0.1s;
+}
+
+
+
+
+@keyframes fall {
+  0% {
+    top: -50px;
+    transform: rotate(0deg);
+  }
+  100% {
+    top: 100vh;
+    transform: rotate(360deg);
+  }
+}
+
+
 .pokeball {
-  width: 30px;
-  height: 30px;
+  width: 3.65rem;
+  height: 3.65rem;
   margin-right: 10px;
   transition: transform 0.6s ease-in-out;
+  margin-top: 25px;
 }
 
 .pokeball:hover {
   transform: rotate(360deg);
 }
 
-/* === HEADING TEXT === */
+
 .heading {
   font-family: 'Press Start 2P', cursive;
-  font-size: 14px;
+  font-size: 2.6rem;
   color: white;
   text-shadow: 0 0 5px red;
   transition: all 0.3s ease;
+  margin-top: 25px;
 }
 
 .heading:hover {
@@ -42,79 +136,76 @@
   text-shadow: 0 0 8px red;
 }
 
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: #333;
-}
-
-.container {
-  width: 80%;
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-form {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-input[type="text"] {
-  padding: 10px;
-  font-size: 16px;
-  width: 70%;
-  max-width: 300px;
-  margin-right: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007BFF;
+.pokemon-name{
+  width: 60%;
+  height: 50px;
+  margin-top: 10%;
+  font-size: 1.05rem;
+  border: 3px solid red;
+  border-radius: 8px;
+  animation: glow 1.5s linear infinite;
+  background: black;
   color: white;
+  font-family: 'Press Start 2P', cursive;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px red;
+  }
+  50% {
+    box-shadow: 0 0 15px yellow;
+  }
+  100% {
+    box-shadow: 0 0 5px red;
+  }
+}
+
+.submit-button{
+  height: 50px;
+  width: 10%;
+  margin-top: 3.5%;
+  background-color: white;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  color: black;
+  font-weight: bold;
+  font-family: 'Press Start 2P', cursive;
+  border-radius: 8px;
+  border: 3PX RED solid;
 }
 
-button:hover {
-  background-color: #0056b3;
+body{
+  background: radial-gradient(white, red, yellow, white);
 }
 
-.pokemon-info {
-  text-align: center;
+.bg-fire {
+  background: linear-gradient(to bottom, #ff7e5f, #feb47b);
 }
 
-.pokemon-info img {
-  max-width: 700px;
+.bg-electric {
+  background: radial-gradient(circle, #fff700, #f0c000, #f9d423);
 }
 
-.details {
-  margin-top: 20px;
+.bg-water {
+  background: linear-gradient(to right, #43cea2, #185a9d);
 }
 
-.details ul {
-  list-style: none;
-  padding: 0;
+.bg-grass {
+  background: linear-gradient(to top, #56ab2f, #a8e063);
 }
 
-.details li {
-  margin: 5px 0;
+.bg-psychic {
+  background: linear-gradient(to bottom, #bc4e9c, #f80759);
 }
 
+.bg-fairy {
+  background: linear-gradient(to bottom, #ff84dc, #ef79a0);
+}
+
+.bg-dark {
+  background: linear-gradient(to bottom, #887425, #726c37);
+}
+
+.bg-normal {
+  background-color: #ecb205;
+}
