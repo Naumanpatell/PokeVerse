@@ -21,93 +21,8 @@
   left: 0;
   width: 100%;
   pointer-events: none;
-  z-index: 0; /* Keep it behind content */
+  z-index: 0; 
 }
-
-.pokeball-fall {
-  position: absolute;
-  top: -50px;
-  width: 40px;
-  animation: fall 2s linear 2;
-  opacity: 0.8;
-}
-
-/* Different delays for variety */
-.delay1 {
-  left: 10%;
-  animation-delay: 0.1s;
-}
-.delay2 {
-  left: 20%;
-  animation-delay: 0.1s;
-}
-.delay3 {
-  left: 30%;
-  animation-delay: 0.05s;
-}
-.delay4 {
-  left: 40%;
-  animation-delay: 0.1s;
-}
-.delay5 {
-  left: 50%;
-  animation-delay: 0.1s;
-}
-.delay6 {
-  left: 60%;
-  animation-delay: 0.1s;
-}
-.delay7 {
-  left: 70%;
-  animation-delay: 0.1s;
-}
-.delay8 {
-  left: 80%;
-  animation-delay: 0.1s;
-}
-.delay9 {
-  left: 90%;
-  animation-delay: 0.1s;
-}
-.delay10 {
-  left: 15%;
-  animation-delay: 0.1s;
-}
-.delay11{
-  left: 25%;
-  animation-delay: 0.1s;
-}
-.delay12{
-  left: 35%;
-  animation-delay: 0.1s;
-}
-.delay13 {
-  left: 45%;
-  animation-delay: 0.1s;
-}
-.delay14 {
-  left: 55%;
-  animation-delay: 0.1s;
-}
-.delay15 {
-  left: 65%;
-  animation-delay: 0.1s;
-}
-
-
-
-
-@keyframes fall {
-  0% {
-    top: -50px;
-    transform: rotate(0deg);
-  }
-  100% {
-    top: 100vh;
-    transform: rotate(360deg);
-  }
-}
-
 
 .pokeball {
   width: 3.65rem;
@@ -141,25 +56,12 @@
   height: 50px;
   margin-top: 10%;
   font-size: 1.05rem;
-  border: 3px solid red;
   border-radius: 8px;
-  animation: glow 1.5s linear infinite;
   background: black;
   color: white;
   font-family: 'Press Start 2P', cursive;
 }
 
-@keyframes glow {
-  0% {
-    box-shadow: 0 0 5px red;
-  }
-  50% {
-    box-shadow: 0 0 15px yellow;
-  }
-  100% {
-    box-shadow: 0 0 5px red;
-  }
-}
 
 .submit-button{
   height: 50px;
@@ -171,41 +73,130 @@
   font-weight: bold;
   font-family: 'Press Start 2P', cursive;
   border-radius: 8px;
-  border: 3PX RED solid;
+  
 }
-
+/* 
 body{
   background: radial-gradient(white, red, yellow, white);
-}
-
+} */
+/* Fire */
 .bg-fire {
   background: linear-gradient(to bottom, #ff7e5f, #feb47b);
 }
 
-.bg-electric {
-  background: radial-gradient(circle, #fff700, #f0c000, #f9d423);
-}
-
+/* Water */
 .bg-water {
   background: linear-gradient(to right, #43cea2, #185a9d);
 }
 
+/* Grass */
 .bg-grass {
   background: linear-gradient(to top, #56ab2f, #a8e063);
 }
 
+/* Electric */
+.bg-electric {
+  background: radial-gradient(circle, #fff700, #f0c000, #f9d423);
+}
+
+/* Psychic */
 .bg-psychic {
   background: linear-gradient(to bottom, #bc4e9c, #f80759);
 }
 
+/* Fairy */
 .bg-fairy {
-  background: linear-gradient(to bottom, #ff84dc, #ef79a0);
+  background: linear-gradient(to bottom, #f096d6, #ef79a0);
 }
 
 .bg-dark {
-  background: linear-gradient(to bottom, #887425, #726c37);
+  background: linear-gradient(to bottom, #4a4a4a, #2a2a2a);
+  color: #f5f5f5;
+}
+/* Normal */
+.bg-normal {
+  background: linear-gradient(to right, #dadada, #b0a997);
 }
 
-.bg-normal {
-  background-color: #ecb205;
+/* Fighting */
+.bg-fighting {
+  background: linear-gradient(to right, #d32f2f, #f57c00);
+}
+
+/* Flying */
+.bg-flying {
+  background: linear-gradient(to bottom, #89f7fe, #66a6ff);
+}
+
+/* Rock */
+.bg-rock {
+  background: linear-gradient(to top, #d7ccc8, #8d6e63);
+}
+
+/* Ground */
+.bg-ground {
+  background: linear-gradient(to top, #c2b280, #a0522d);
+}
+
+/* Bug */
+.bg-bug {
+  background: linear-gradient(to bottom, #a8b820, #d0f0c0);
+}
+
+/* Ghost */
+.bg-ghost {
+  background: linear-gradient(to bottom, #5f4b8b, #2c2a4a);
+  color: white;
+}
+
+/* Steel */
+.bg-steel {
+  background: linear-gradient(to bottom, #b0bec5, #78909c);
+}
+
+/* Ice */
+.bg-ice {
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+}
+
+/* Dragon */
+.bg-dragon {
+  background: linear-gradient(to bottom, #6a11cb, #2575fc);
+}
+
+/* Poison */
+.bg-poison {
+  background: linear-gradient(to right, #9b59b6, #8e44ad);
+}
+
+/* Custom Type - Phantom */
+.bg-phantom {
+  background: radial-gradient(circle, #3a0ca3, #7209b7, #4361ee);
+  box-shadow: inset 0 0 10px #4361ee;
+  color: #ffffff;
+}
+
+
+.pokemon-info{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 5%;
+}
+
+.pokemon-name-header{
+  font-family: 'Press Start 2P', cursive;
+  font-size: 3rem;
+}
+
+.pokemon_img{
+  height: 250px;
+  width: 250px;
+}
+
+.details{
+  margin-left: 12%;
+  font-size: 20px;
+  font-family: 'VT323', monospace;
 }
