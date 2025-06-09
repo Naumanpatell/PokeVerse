@@ -2,114 +2,170 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pokedex</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
 
 </head>
 
-<body>
-
-  <body class="bg-{{primary_type}}">
+<body class="bg-{{primary_type}}">
     <div>
-      <header>
-        <nav class="custom-navbar" style="height: 100px">
-          <div class="navbar-container">
-            <div class="logo-container">
-              <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
+        <header>
+            <nav class="custom-navbar" style="height: 100px">
+                <div class="navbar-container">
+                    <div class="logo-container">
+                        <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
+                    </div>
+
+                    <span class="heading">PokeVerse</span>
+
+                    <div class="nav-links">
+                        <a href="{{url_for('home')}}" class="nav-link">Home</a>
+                        <a href="{{ url_for('pokedex') }}" class="nav-link">Pokédex</a>
+                        <a href="{{ url_for('games') }}" class="nav-link">Games</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="pokeball-container"></div>
+
+        <form method="POST" autocomplete="off">
+            <div
+                style="display: flex; justify-content: center; align-items: center; flex-direction: column; position: relative;">
+                <input type="text" id="pokemonInput" name="pokemon_name" placeholder=" Enter Pokémon name" required
+                    class="pokemon-name" oninput="showSuggestions(this.value)" />
+                <div id="suggestions" class="autocomplete-suggestions"></div>
+                <button type="submit" class="submit-button">Search</button>
             </div>
+        </form>
 
-            <span class="heading">PokeVerse</span>
+        {% if pokemon_info %}
+        <div class="pokemon-info" id="pokemonInfoContainer">
+            <h2 class="pokemon-name-header">
+                {{ pokemon_info["name"] | capitalize }}
+            </h2>
+            <img class="pokemon_img" src="{{ pokemon_info['sprites']['front_default'] }}"
+                alt="{{ pokemon_info['name'] }} sprite" />
+            <div class="details" style="display: flex; justify-content: space-around;">
 
-            <div class="nav-links">
-              <a href="{{url_for('home')}}" class="nav-link">Home</a>
-              <a href="{{ url_for('pokedex') }}" class="nav-link">Pokédex</a>
-              <a href="{{ url_for('games') }}" class="nav-link">Games</a>
+                <div class="details-block">
+                    <p><strong>Height:</strong> {{ pokemon_info['height'] /10 }} meters</p>
+                    <p><strong>Weight:</strong> {{ pokemon_info['weight'] / 10 }} kilograms</p>
+                    <p><strong>Types:</strong> {{ pokemon_info["types"] | map(attribute='type.name') | join(', ') }}
+                    </p>
+                    <p><strong>Abilities:</strong>
+                        {{ pokemon_info["abilities"][:1] | map(attribute='ability.name') | join(', ')}}
+                    </p>
+                </div>
+                <div class="details-block">
+                    <h3><strong>Stats:</strong></h3>
+                    <ul>
+                        {% for stat in pokemon_info['stats'] %}
+                        <li class="stat-item">{{ stat['stat']['name'] | capitalize }}: {{ stat['base_stat'] }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="details-block">
+                    <h3><strong>Moves:</strong></h3>
+                    <ul>
+                        {% for move in pokemon_info['moves'][:5] %}
+                        <li class="move-item">{{ move['move']['name'] }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-          </div>
-        </nav>
-      </header>
-      <div class="pokeball-container"></div>
-
-      <form method="POST" autocomplete="off">
-        <div
-          style="display: flex; justify-content: center; align-items: center; flex-direction: column; position: relative;">
-          <input type="text" id="pokemonInput" name="pokemon_name" placeholder=" Enter Pokémon name" required
-            class="pokemon-name" oninput="showSuggestions(this.value)" />
-          <div id="suggestions" class="autocomplete-suggestions"></div>
-          <button type="submit" class="submit-button">Search</button>
         </div>
-      </form>
-
-      {% if pokemon_info %}
-      <div class="pokemon-info">
-        <h2 class="pokemon-name-header">
-          {{ pokemon_info["name"] | capitalize }}
-        </h2>
-        <img class="pokemon_img" src="{{ pokemon_info['sprites']['front_default'] }}"
-          alt="{{ pokemon_info['name'] }} sprite" />
-        <div class="details" style="display: flex; justify-content: space-around;">
-
-          <div style="margin: 0;">
-            <p><strong>Height:</strong> {{ pokemon_info['height'] /10 }} meters</p>
-            <p><strong>Weight:</strong> {{ pokemon_info['weight'] / 10 }} kilograms</p>
-            <p><strong>Types:</strong> {{ pokemon_info["types"] | map(attribute='type.name') | join(', ') }}</p>
-            <p><strong>Abilities:</strong> {{ pokemon_info["abilities"] | map(attribute='ability.name') | join(', ')}}
-            </p>
-          </div>
-          <div>
-            <h3><strong>Stats:</strong></h3>
-            <ul>
-              {% for stat in pokemon_info['stats'] %}
-              <li>{{ stat['stat']['name'] | capitalize }}: {{ stat['base_stat'] }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-          <div>
-            <h3><strong>Moves:</strong></h3>
-            <ul>
-              {% for move in pokemon_info['moves'][:5] %}
-              <li>{{ move['move']['name'] }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
     </div>
     {% elif request.method == 'POST' %}
     <p
-      style="color: black; font: center; margin-left: 20%; font-size: 120%; margin-top: 5%; font-family: 'Press Start 2P', cursive;;">
-      Sorry, Pokémon not found. Please try another name.</p>
+        style="color: black; font: center; margin-left: 20%; font-size: 120%; margin-top: 5%; font-family: 'Press Start 2P', cursive;;">
+        Sorry, Pokémon not found. Please try another name.</p>
     {% endif %}
 
 
     <script>
-      const allPokemonNames = {{ pokemon_list | tojson }};
+        const allPokemonNames = {{ pokemon_list | default([]) | tojson }};
 
-      function showSuggestions(input) {
-        const suggestionsDiv = document.getElementById("suggestions");
-        suggestionsDiv.innerHTML = "";
-        if (!input) return;
-
-        const filtered = allPokemonNames.filter(name => name.toLowerCase().startsWith(input.toLowerCase())).slice(0, 10);
-        filtered.forEach(name => {
-          const div = document.createElement("div");
-          div.classList.add("suggestion-item");
-          div.innerText = name;
-          div.onclick = () => {
-            document.getElementById("pokemonInput").value = name;
+        function showSuggestions(input) {
+            const suggestionsDiv = document.getElementById("suggestions");
             suggestionsDiv.innerHTML = "";
-          };
-          suggestionsDiv.appendChild(div);
+            if (!input) return;
+
+            const filtered = allPokemonNames.filter(name => name.toLowerCase().startsWith(input.toLowerCase())).slice(0, 10);
+            filtered.forEach(name => {
+                const div = document.createElement("div");
+                div.classList.add("suggestion-item");
+                div.innerText = name;
+                div.onclick = () => {
+                    document.getElementById("pokemonInput").value = name;
+                    suggestionsDiv.innerHTML = "";
+                };
+                suggestionsDiv.appendChild(div);
+            });
+        }
+
+        // Animation logic
+        function animatePokemonDetails() {
+            const pokemonInfoContainer = document.getElementById('pokemonInfoContainer');
+            if (pokemonInfoContainer) {
+                // Animate the main info container (fade in and slide up)
+                pokemonInfoContainer.classList.add('fade-in-slide-up');
+
+                // Animate the name header (staggered reveal)
+                const nameHeader = pokemonInfoContainer.querySelector('.pokemon-name-header');
+                const nameText = nameHeader.textContent;
+                nameHeader.innerHTML = '';
+                nameText.split('').forEach((char, index) => {
+                    const span = document.createElement('span');
+                    span.textContent = char;
+                    span.classList.add('char-reveal');
+                    span.style.animationDelay = `${0.3 + index * 0.05}s`; // Stagger delay after initial container animation
+                    nameHeader.appendChild(span);
+                });
+
+
+                // Animate the image (pop in)
+                const pokemonImage = pokemonInfoContainer.querySelector('.pokemon_img');
+                if (pokemonImage) {
+                    pokemonImage.classList.add('pop-in');
+                    pokemonImage.style.animationDelay = '0.6s'; // Delay after container animation
+                }
+
+                // Animate detail blocks (staggered fade in from bottom)
+                const detailBlocks = pokemonInfoContainer.querySelectorAll('.details-block p, .details-block h3');
+                detailBlocks.forEach((element, index) => {
+                    element.classList.add('slide-in-detail');
+                    element.style.animationDelay = `${0.8 + index * 0.1}s`; // Staggered delay
+                });
+
+                // Animate individual stats and moves (staggered slide in from left)
+                const statItems = pokemonInfoContainer.querySelectorAll('.stat-item');
+                statItems.forEach((item, index) => {
+                    item.classList.add('list-item-slide-in');
+                    item.style.animationDelay = `${1.2 + index * 0.08}s`; // Further staggered delay
+                });
+
+                const moveItems = pokemonInfoContainer.querySelectorAll('.move-item');
+                moveItems.forEach((item, index) => {
+                    item.classList.add('list-item-slide-in');
+                    item.style.animationDelay = `${1.2 + index * 0.08}s`; // Further staggered delay
+                });
+            }
+        }
+
+        // Call animation when the page loads and pokemon_info is present
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if the pokemonInfoContainer element exists, which means pokemon_info was rendered
+            if (document.getElementById('pokemonInfoContainer')) {
+                animatePokemonDetails();
+            }
         });
-      }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 
-  </body>
+</body>
 
 </html>
