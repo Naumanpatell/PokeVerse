@@ -1,0 +1,111 @@
+:root {
+  --accent: #ffcb05;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(100deg, #1a2040 0%, #090b16 100%);
+  color: #fff;
+  overflow-x: hidden;
+}
+
+
+
+/* HERO SECTION */
+header {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+header h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+header p {
+  margin-top: 1rem;
+  font-size: 1.15rem;
+  max-width: 640px;
+  opacity: 0.9;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.actions a {
+  padding: 0.85rem 1.75rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  border: 2px solid #fff;
+  transition: 0.25s;
+  letter-spacing: 0.5px;
+}
+
+.actions a.primary {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+
+.actions a:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+}
+
+/* BACKGROUND ELEMENTS */
+.cloud {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  animation: swirl 60s linear infinite;
+}
+
+@keyframes swirl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+@keyframes float {
+  0% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-40vh) rotate(180deg); }
+  100% { transform: translateY(0) rotate(360deg); }
+}
+
+/* SPRITES */
+.sprite {
+  position: absolute;
+  width: 160px;
+  image-rendering: pixelated;
+  animation: bob 4s infinite ease-in-out;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+#charmander { bottom: 38%; left: 10%; }
+#pikachu { bottom: 18%; right: 8%; }
+#squirtle { top: 12%; right: 15%; }
+

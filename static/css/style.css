@@ -118,13 +118,19 @@
 }
 
 .submit-button:hover {
-    background-color: rgb(134, 134, 134);
+    background-color: rgb(83, 83, 83);
     transform: translateY(-2px); /* Lift button slightly on hover */
 }
 
 .submit-button:active {
     transform: translateY(1px); /* Press down effect */
     background-color: rgb(90, 90, 90);
+}
+ 
+.bg-main{
+  background: linear-gradient(100deg, #1a2040 0%, #090b16 100%);
+  color: #fff;
+  overflow-x: hidden;
 }
 
 .bg-fire {
@@ -163,7 +169,7 @@
 }
 /* Normal */
 .bg-normal {
-    background: linear-gradient(to right, #dadada, #b0a997);
+    background-color: wheat;
     color: black;
 }
 
@@ -244,27 +250,22 @@
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); /* Added subtle pixel shadow */
 }
 
-/* Initial state for individual characters in the name header */
 .pokemon-name-header .char-reveal {
     opacity: 0;
     transform: translateY(-10px);
-    display: inline-block; /* Crucial for transform on individual characters */
+    display: inline-block; 
 }
-
 .pokemon_img {
     height: 250px;
     width: 250px;
     margin-bottom: 2%;
-    /* Initial state for animation */
     opacity: 0;
     transform: scale(0.8);
 }
 
 .details {
     width: 75%;
-    font-size: 1.15rem; /* Adjusted for better readability with pixel font */
-    font-family: 'Press Start 2P', cursive; /* Applied to details container */
-    margin-bottom: 10%;
+    font-size: 1.15rem; /* Adjusted for better readability with pixel font */    margin-bottom: 10%;
     color: white;
 }
 
@@ -292,7 +293,7 @@
 
 .autocomplete-suggestions {
     background: black;
-    border: 1px solid #ccc;
+    border: 0px solid #ccc;
     max-height: 200px;
     overflow-y: auto;
     z-index: 999;
@@ -312,66 +313,3 @@
 
 
 
-/* Main container fade in and slide up */
-.fade-in-slide-up {
-    animation: fadeInSlideUp 0.7s ease-out forwards;
-}
-
-@keyframes fadeInSlideUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Character reveal for name header */
-.char-reveal {
-    animation: charReveal 0.4s ease-out forwards;
-}
-
-@keyframes charReveal {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Image pop in */
-.pop-in {
-    animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* Bounce effect */
-}
-
-@keyframes popIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* Detail blocks slide in */
-.slide-in-detail {
-    animation: slideInDetail 0.5s ease-out forwards;
-}
-
-@keyframes slideInDetail {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* List items (stats/moves) slide in from left */
-.list-item-slide-in {
-    animation: listItemSlideIn 0.4s ease-out forwards;
-}
-
-@keyframes listItemSlideIn {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}

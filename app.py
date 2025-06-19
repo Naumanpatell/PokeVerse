@@ -29,7 +29,7 @@ def get_pokemon_type(pokemon_name):
         return primary_type
     except (requests.exceptions.RequestException, IndexError) as e:
         print(f"Error fetching Pokémon type for {pokemon_name}: {e}")
-        return 'normal' # Default to 'normal' on error or if no types are found
+        return 'main' # Default to 'normal' on error or if no types are found
 
 
 @app.route('/')
@@ -41,7 +41,7 @@ def home():
 @app.route('/pokedex', methods=['GET', 'POST'])
 def pokedex():
     pokemon_info = None
-    primary_type = 'normal'
+    primary_type = 'main'
 
     pokemon_list = [] # Initialize as an empty list
     try:
@@ -79,7 +79,7 @@ def pokedex():
 
 @app.route('/games')
 def games():
-    return render_template("games.html ")
+    return render_template("games.html")
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
