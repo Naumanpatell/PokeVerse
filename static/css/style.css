@@ -87,7 +87,7 @@
 .pokemon-name {
     width: 60%;
     height: 50px;
-    margin-top: 8%;
+    margin-top: 5%;
     font-size: 1.05rem;
     border-radius: 8px;
     background: black;
@@ -102,6 +102,13 @@
     transform: scale(1.01);
     transition: all 0.2s ease-in-out;
 }
+
+#pokehead{
+    font-size: 2rem;
+    font-family: 'Press Start 2P', cursive;
+    margin-top: 5%;
+}
+
 
 
 .submit-button {
@@ -238,9 +245,6 @@
     justify-content: center;
     flex-direction: column;
     margin-top: 3%;
-    /* Initial state for animation */
-    opacity: 0;
-    transform: translateY(20px);
 }
 
 .pokemon-name-header {
@@ -265,7 +269,7 @@
 
 .details {
     width: 75%;
-    font-size: 1.15rem; /* Adjusted for better readability with pixel font */    margin-bottom: 10%;
+    font-size: 2rem; /* Adjusted for better readability with pixel font */    margin-bottom: 10%;
     color: white;
 }
 
@@ -273,7 +277,7 @@
 .details p,
 .details li,
 .details h3 {
-    font-family: 'Press Start 2P', cursive;
+    /* font-family: 'Press Start 2P', cursive; */
     margin-bottom: 8px;
 }
 
@@ -311,5 +315,54 @@
     background-color: #848282;
 }
 
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+.fade-in-slide-up {
+    animation: fadeInSlideUp 0.8s ease forwards;
+}
+
+@keyframes popIn {
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.pop-in {
+    animation: popIn 0.6s ease forwards;
+}
+
+@keyframes slideInDetail {
+   
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in-detail {
+    animation: slideInDetail 0.5s ease forwards;
+}
+
+@keyframes listItemSlideIn {
+    
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.list-item-slide-in {
+    animation: listItemSlideIn 0.4s ease forwards;
+}
 

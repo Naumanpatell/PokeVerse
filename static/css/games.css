@@ -1,0 +1,156 @@
+
+body {
+  margin: 0;
+  background: linear-gradient(to bottom, #0a0a23, #14142b);
+  color: #fff;
+}
+
+.custom-navbar {
+  background-color: black;
+  height: 4rem;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.nav-links {
+  display: flex;
+  margin-left: auto;
+  gap: 20px;
+  padding-right: 20px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.pokeball-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pokeball {
+  width: 3.65rem;
+  height: 3.65rem;
+  margin-right: 10px;
+  transition: transform 0.6s ease-in-out;
+  margin-top: 25px;
+}
+
+.pokeball:hover {
+  transform: rotate(360deg) scale(1.1); /* Added scale on hover */
+}
+
+.heading {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.6rem;
+    color: white;
+    text-shadow: 0 0 5px red;
+    transition: all 0.3s ease;
+    margin-top: 25px;
+}
+
+.heading:hover {
+    color: #FFD700;
+    text-shadow: 0 0 8px red;
+    animation: headingPulse 0.8s infinite alternate; /* Added pulse on hover */
+}
+
+@keyframes headingPulse {
+  from {
+      transform: scale(1);
+  }
+  to {
+      transform: scale(1.03);
+  }
+}
+
+main {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.games-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #ffcb05;
+}
+
+.games-grid {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.game-card {
+  background-color: #1c1c3c;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 50%;
+  height: 200px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(255, 255, 255, 0.5);
+}
+
+
+.game-card h3 {
+  margin: 1rem 0 0.5rem;
+  color: #ffcb05;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 28px;
+ 
+}
+
+.game-card p {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.play-button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background-color: #ff5656;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.play-button:hover {
+  background-color: #e03e3e;
+}
+
+.play-button.disabled {
+  background-color: grey;
+  pointer-events: none;
+}
+

@@ -1,31 +1,60 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Games</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Pokeverse Games</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/games.css') }}">
 </head>
 <body>
-    <div>
-    <header>
-      <nav class="custom-navbar" style="height: 100px">
-        <div class="navbar-container">
-          <div class="logo-container">
-            <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
-          </div>
-    
-          <span class="heading">PokeVerse</span>
-    
-          <div class="nav-links">
-             <a href="{{url_for('home')}}" class="nav-link">Home</a>
-            <a href="{{ url_for('pokedex') }}" class="nav-link">Pokédex</a>
-            <a href="{{ url_for('games') }}" class="nav-link">Games</a>
-          </div>
-        </div>
-      </nav>
-    </header>
-</div>
+
+  
+  <nav class="custom-navbar">
+    <div class="navbar-container">
+      <div class="logo-container">
+        <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
+      </div>
+      <span class="heading">PokeVerse</span>
+      <div class="nav-links">
+        <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+        <a href="{{ url_for('pokedex') }}" class="nav-link">Pokédex</a>
+        <a href="{{ url_for('games') }}" class="nav-link">Games</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <main>
+    <h2 class="games-title">Choose a Game</h2>
+    <div class="games-grid">
+
+      <!-- Game 1 -->
+      <div class="game-card">
+        <!-- <img src="/static/images/guess_pokemon.png" alt="Guess Pokemon"> -->
+        <h3>Guess the Pokémon</h3>
+        <p>Can you guess the Pokémon based on silhouette?</p>
+        <a href="{{ url_for('guess_pokemon') }}" class="play-button">Play</a>
+      </div>
+
+      <!-- Game 2 -->
+      <div class="game-card">
+        <!-- <img src="/static/images/pokemon_quiz.png" alt="Pokemon Quiz"> -->
+        <h3>Pokémon Quiz</h3>
+        <p>Test your knowledge across generations!</p>
+        <a href="{{ url_for('pokemon_quiz') }}" class="play-button">Play</a>
+      </div>
+
+      <!-- Coming Soon -->
+      <div class="game-card">
+        <img src="/static/images/coming_soon.png" alt="Coming Soon">
+        <h3>Coming Soon</h3>
+        <p>More games will be added soon. Stay tuned!</p>
+        <a href="#" class="play-button disabled">Coming Soon</a>
+      </div>
+
+    </div>
+  </main>
+
 </body>
-</html>
+</html> 

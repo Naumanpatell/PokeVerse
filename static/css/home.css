@@ -16,7 +16,6 @@ body {
 }
 
 
-
 /* HERO SECTION */
 header {
   height: 100vh;
@@ -105,7 +104,7 @@ header p {
   50% { transform: translateY(-10px); }
 }
 
-#charmander { bottom: 38%; left: 10%; }
+#charmander { bottom: 28%; left: 10%; }
 #pikachu { bottom: 18%; right: 8%; }
 #squirtle { top: 12%; right: 15%; }
-
+#bulbsaur {top: 12%; left: 15%;}

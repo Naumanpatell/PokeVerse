@@ -42,8 +42,8 @@ def home():
 def pokedex():
     pokemon_info = None
     primary_type = 'main'
-
-    pokemon_list = [] # Initialize as an empty list
+    pokemon_list = [] 
+    
     try:
         response = requests.get('https://pokeapi.co/api/v2/pokemon?limit=10000')
         response.raise_for_status() # Raise an HTTPError for bad responses (4xx or 5xx)
@@ -81,5 +81,13 @@ def pokedex():
 def games():
     return render_template("games.html")
 
+@app.route('/guess_pokemon') 
+def guess_pokemon():
+    return render_template('guess_pokemon')
+
+@app.route('/pokemon_quiz') 
+def pokemon_quiz():
+    return render_template('pokemon_quiz')
+        
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

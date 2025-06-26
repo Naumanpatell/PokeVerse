@@ -2,34 +2,34 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokedex</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokedex</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
 
 </head>
 
-<body class="bg-{{primary_type}}">
-    <div>
-            <nav class="custom-navbar" style="height: 100px">
-                <div class="navbar-container">
-                    <div class="logo-container">
-                        <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
-                    </div>
+<body>
+  <div>
+    <nav class="custom-navbar" style="height: 100px">
+      <div class="navbar-container">
+        <div class="logo-container">
+          <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
+        </div>
 
-                    <span class="heading">PokeVerse</span>
+        <span class="heading">PokeVerse</span>
 
-                    <div class="nav-links">
-                        <a href="{{url_for('home')}}" class="nav-link">Home</a>
-                        <a href="{{ url_for('pokedex') }}" class="nav-link">Pokédex</a>
-                        <a href="{{ url_for('games') }}" class="nav-link">Games</a>
-                    </div>
-                </div>
-            </nav>
-    </div>
+        <div class="nav-links">
+          <a href="{{url_for('home')}}" class="nav-link">Home</a>
+          <a href="{{ url_for('pokedex') }}" class="nav-link">Pokédex</a>
+          <a href="{{ url_for('games') }}" class="nav-link">Games</a>
+        </div>
+      </div>
+    </nav>
+  </div>
 
   <!-- ──────────── HERO ──────────── -->
   <header id="hero">
@@ -40,20 +40,26 @@
 
     <div class="actions">
       <a href="{{ url_for('pokedex') }}" class="primary">Explore Pokedex</a>
-      <a href="{{ url_for('games') }}" >Play Games</a>
+      <a href="{{ url_for('games') }}">Play Games</a>
     </div>
-    
 
-    <img id="charmander" class="sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png" alt="Charmander">
-    <img id="pikachu" class="sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu">
-    <img id="squirtle" class="sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png" alt="Squirtle">
 
-    
+    <img id="charmander" class="sprite"
+      src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"
+      alt="Charmander">
+    <img id="pikachu" class="sprite"
+      src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
+      alt="Pikachu">
+    <img id="squirtle" class="sprite"
+      src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png"
+      alt="Squirtle">
+    <img id="bulbsaur" class="sprite"
+      src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+      alt="bulbsaur">
+
   </header>
 
   <!-- ──────────── FOOTER ──────────── -->
   <footer></footer>
- 
+
 </body>
-
-
