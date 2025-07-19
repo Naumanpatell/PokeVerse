@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokémon Guess Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/games.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pokemon_guess.css') }}">
+</head>
+<body class="pokemon-guess-bg">
+    <nav class="custom-navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
+            </div>
+            <span class="heading">PokeVerse</span>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('pokedex') }}" class="nav-link">Pokédex</a>
+                <a href="{{ url_for('games') }}" class="nav-link">Games</a>
+            </div>
+        </div>
+    </nav>
+    <div class="bg-orb bg-orb1"></div>
+    <div class="bg-orb bg-orb2"></div>
+    <div class="bg-orb bg-orb3"></div>
+    <div class="pokemon-guess-container outlined">
+        <h2 class="guess-title">Who's That Pokémon?</h2>
+        <div class="pokemon-image-wrapper">
+            <img id="pokemon-image" class="pokemon-silhouette" src="" alt="Pokémon silhouette">
+        </div>
+        <div id="tries-info" class="tries-info">Tries left: 3</div>
+        <form id="guess-form" autocomplete="off">
+            <input type="text" id="guess-input" class="guess-input" placeholder="Enter Pokémon name" required>
+            <button type="submit" class="guess-btn">Guess</button>
+        </form>
+        <div id="guess-feedback" class="guess-feedback"></div>
+        <button id="next-btn" class="next-btn" style="display:none;">Next Pokémon</button>
+    </div>
+    <script>
+        let triesLeft = 3;
+        function fetchRandomPokemon() {
+            const id = Math.floor(Math.random() * 151) + 1;
+            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+                .then(res => res.json())
+                .then(data => {
+                    window.currentPokemon = data.name.toLowerCase();
+                    // Use the official artwork for better silhouette
+                    const imageUrl = data.sprites.other['official-artwork'].front_default || data.sprites.front_default;
+                    document.getElementById('pokemon-image').src = imageUrl;
+                    document.getElementById('pokemon-image').style.filter = 'brightness(0) contrast(100%)';
+                    document.getElementById('guess-feedback').textContent = '';
+                    document.getElementById('next-btn').style.display = 'none';
+                    document.getElementById('guess-input').value = '';
+                    document.getElementById('guess-input').disabled = false;
+                    document.querySelector('.guess-btn').disabled = false;
+                    triesLeft = 3;
+                    document.getElementById('tries-info').textContent = 'Tries left: 3';
+                });
+        }
+
+        document.getElementById('guess-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const guess = document.getElementById('guess-input').value.trim().toLowerCase();
+            if (guess === window.currentPokemon) {
+                document.getElementById('guess-feedback').textContent = `Correct! It's ${window.currentPokemon.charAt(0).toUpperCase() + window.currentPokemon.slice(1)}!`;
+                document.getElementById('pokemon-image').style.filter = 'none';
+                document.getElementById('next-btn').style.display = 'inline-block';
+                document.getElementById('guess-input').disabled = true;
+                document.querySelector('.guess-btn').disabled = true;
+                document.getElementById('tries-info').textContent = '';
+            } else {
+                triesLeft--;
+                if (triesLeft > 0) {
+                    document.getElementById('guess-feedback').textContent = 'Incorrect! Try again!';
+                    document.getElementById('tries-info').textContent = `Tries left: ${triesLeft}`;
+                } else {
+                    document.getElementById('guess-feedback').textContent = `Out of tries! The answer was ${window.currentPokemon.charAt(0).toUpperCase() + window.currentPokemon.slice(1)}.`;
+                    document.getElementById('pokemon-image').style.filter = 'none';
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                    document.getElementById('guess-input').disabled = true;
+                    document.querySelector('.guess-btn').disabled = true;
+                    document.getElementById('tries-info').textContent = '';
+                }
+            }
+        });
+
+        document.getElementById('next-btn').addEventListener('click', function() {
+            fetchRandomPokemon();
+        });
+
+        // Initial load
+        fetchRandomPokemon();
+    </script>
+</body>
+</html> 

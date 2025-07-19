@@ -49,6 +49,7 @@ def pokedex():
         response.raise_for_status() # Raise an HTTPError for bad responses (4xx or 5xx)
         data = response.json()
         pokemon_list = [pokemon['name'] for pokemon in data['results']]
+        print(f"Successfully loaded {len(pokemon_list)} Pokémon for autocomplete")
     except requests.exceptions.RequestException as e:
         # If fetching the full list fails, print an error and use an empty list
         print(f"Error fetching all Pokémon names for autocomplete: {e}")
@@ -81,13 +82,14 @@ def pokedex():
 def games():
     return render_template("games.html")
 
-@app.route('/guess_pokemon') 
-def guess_pokemon():
-    return render_template('guess_pokemon')
+@app.route('/pokemon_guess')
+def pokemon_guess():
+    return render_template('pokemon_guess.html')
 
-@app.route('/pokemon_quiz') 
+@app.route('/pokemon_quiz')
 def pokemon_quiz():
-    return render_template('pokemon_quiz')
+    return render_template('pokemon_quiz.html')
+
         
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

@@ -1,0 +1,187 @@
+.pokemon-guess-bg {
+    min-height: 100vh;
+    background: linear-gradient(120deg, #23243a 0%, #1a1a2e 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Remove orbs and animation */
+.bg-orb, .bg-orb1, .bg-orb2, .bg-orb3 {
+    display: none !important;
+}
+
+/* Fun, overlapping Pokémon sprites for background - Smaller and positioned around edges */
+.sprite[class^="guess-bg-pokemon"] {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.15;
+    filter: drop-shadow(0 2px 8px #0008);
+    transition: opacity 0.3s;
+    width: 50px; /* Smaller default size */
+}
+
+/* Top edge Pokémon */
+.guess-bg-pokemon1 { left: 5vw; top: 2vw; width: 45px; transform: rotate(-10deg); }
+.guess-bg-pokemon2 { left: 15vw; top: 1vw; width: 40px; transform: rotate(12deg); }
+.guess-bg-pokemon3 { left: 25vw; top: 3vw; width: 50px; transform: rotate(-8deg); }
+.guess-bg-pokemon4 { left: 35vw; top: 1vw; width: 42px; transform: rotate(7deg); }
+.guess-bg-pokemon5 { left: 45vw; top: 2vw; width: 48px; transform: rotate(-14deg); }
+.guess-bg-pokemon6 { left: 55vw; top: 1vw; width: 45px; transform: rotate(18deg); }
+.guess-bg-pokemon7 { left: 65vw; top: 3vw; width: 40px; transform: rotate(-6deg); }
+.guess-bg-pokemon8 { left: 75vw; top: 2vw; width: 50px; transform: rotate(15deg); }
+.guess-bg-pokemon9 { left: 85vw; top: 1vw; width: 42px; transform: rotate(-12deg); }
+.guess-bg-pokemon10 { left: 95vw; top: 3vw; width: 45px; transform: rotate(10deg); }
+
+/* Right edge Pokémon */
+.guess-bg-pokemon11 { right: 2vw; top: 10vw; width: 48px; transform: rotate(-18deg); }
+.guess-bg-pokemon12 { right: 1vw; top: 20vw; width: 42px; transform: rotate(8deg); }
+.guess-bg-pokemon13 { right: 3vw; top: 30vw; width: 45px; transform: rotate(-7deg); }
+.guess-bg-pokemon14 { right: 2vw; top: 40vw; width: 50px; transform: rotate(13deg); }
+.guess-bg-pokemon15 { right: 1vw; top: 50vw; width: 40px; transform: rotate(-11deg); }
+.guess-bg-pokemon16 { right: 3vw; top: 60vw; width: 48px; transform: rotate(16deg); }
+.guess-bg-pokemon17 { right: 2vw; top: 70vw; width: 42px; transform: rotate(-9deg); }
+.guess-bg-pokemon18 { right: 1vw; top: 80vw; width: 45px; transform: rotate(14deg); }
+.guess-bg-pokemon19 { right: 3vw; top: 90vw; width: 50px; transform: rotate(-13deg); }
+
+/* Bottom edge Pokémon */
+.guess-bg-pokemon20 { left: 5vw; bottom: 2vw; width: 45px; transform: rotate(12deg); }
+.guess-bg-pokemon21 { left: 15vw; bottom: 1vw; width: 40px; transform: rotate(-15deg); }
+.guess-bg-pokemon22 { left: 25vw; bottom: 3vw; width: 50px; transform: rotate(9deg); }
+.guess-bg-pokemon23 { left: 35vw; bottom: 1vw; width: 42px; transform: rotate(-8deg); }
+.guess-bg-pokemon24 { left: 45vw; bottom: 2vw; width: 48px; transform: rotate(11deg); }
+.guess-bg-pokemon25 { left: 55vw; bottom: 1vw; width: 45px; transform: rotate(-10deg); }
+.guess-bg-pokemon26 { left: 65vw; bottom: 3vw; width: 40px; transform: rotate(13deg); }
+.guess-bg-pokemon27 { left: 75vw; bottom: 2vw; width: 50px; transform: rotate(-12deg); }
+.guess-bg-pokemon28 { left: 85vw; bottom: 1vw; width: 42px; transform: rotate(10deg); }
+.guess-bg-pokemon29 { left: 95vw; bottom: 3vw; width: 45px; transform: rotate(-14deg); }
+
+/* Left edge Pokémon */
+.guess-bg-pokemon30 { left: 2vw; top: 10vw; width: 48px; transform: rotate(18deg); }
+.guess-bg-pokemon31 { left: 1vw; top: 20vw; width: 42px; transform: rotate(-8deg); }
+.guess-bg-pokemon32 { left: 3vw; top: 30vw; width: 45px; transform: rotate(7deg); }
+.guess-bg-pokemon33 { left: 2vw; top: 40vw; width: 50px; transform: rotate(-13deg); }
+.guess-bg-pokemon34 { left: 1vw; top: 50vw; width: 40px; transform: rotate(11deg); }
+.guess-bg-pokemon35 { left: 3vw; top: 60vw; width: 48px; transform: rotate(-16deg); }
+.guess-bg-pokemon36 { left: 2vw; top: 70vw; width: 42px; transform: rotate(9deg); }
+.guess-bg-pokemon37 { left: 1vw; top: 80vw; width: 45px; transform: rotate(-14deg); }
+.guess-bg-pokemon38 { left: 3vw; top: 90vw; width: 50px; transform: rotate(13deg); }
+
+/* Corner Pokémon for extra coverage */
+.guess-bg-pokemon39 { left: 8vw; top: 8vw; width: 35px; transform: rotate(-20deg); }
+.guess-bg-pokemon40 { right: 8vw; top: 8vw; width: 35px; transform: rotate(20deg); }
+.guess-bg-pokemon41 { left: 8vw; bottom: 8vw; width: 35px; transform: rotate(20deg); }
+.guess-bg-pokemon42 { right: 8vw; bottom: 8vw; width: 35px; transform: rotate(-20deg); }
+
+/* Additional edge Pokémon for better coverage */
+.guess-bg-pokemon43 { left: 50vw; top: 5vw; width: 40px; transform: rotate(5deg); }
+.guess-bg-pokemon44 { right: 50vw; top: 5vw; width: 40px; transform: rotate(-5deg); }
+.guess-bg-pokemon45 { left: 50vw; bottom: 5vw; width: 40px; transform: rotate(-5deg); }
+.guess-bg-pokemon46 { right: 50vw; bottom: 5vw; width: 40px; transform: rotate(5deg); }
+
+/* Center area Pokémon (smaller and more transparent) */
+.guess-bg-pokemon47 { left: 30vw; top: 25vw; width: 30px; opacity: 0.08; transform: rotate(15deg); }
+.guess-bg-pokemon48 { right: 30vw; top: 25vw; width: 30px; opacity: 0.08; transform: rotate(-15deg); }
+.guess-bg-pokemon49 { left: 30vw; bottom: 25vw; width: 30px; opacity: 0.08; transform: rotate(-15deg); }
+.guess-bg-pokemon50 { right: 30vw; bottom: 25vw; width: 30px; opacity: 0.08; transform: rotate(15deg); }
+
+.pokemon-guess-container {
+    background: linear-gradient(120deg, #23243a 0%, #1a1a2e 100%);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    max-width: 400px;
+    margin: 60px auto 0 auto;
+    padding: 2.5rem 2rem 2rem 2rem;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+}
+
+.outlined {
+    border: 4px solid #000;
+}
+
+.guess-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #ffcb05;
+    text-shadow: 0 0 8px #2a2a40;
+}
+
+.pokemon-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.pokemon-silhouette {
+    width: 180px;
+    height: 180px;
+    filter: brightness(0) contrast(100%);
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    object-fit: contain;
+}
+
+.guess-input {
+    width: 70%;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 1.1rem;
+    margin-right: 0.5rem;
+    font-family: 'Press Start 2P', cursive;
+    background: #181828;
+    color: #fff;
+    outline: none;
+    box-shadow: 0 2px 8px #0002;
+    transition: box-shadow 0.2s;
+}
+
+.guess-input:focus {
+    box-shadow: 0 0 10px #ffcb05;
+}
+
+.guess-btn, .next-btn {
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    background: #ca3a3a;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.guess-btn:hover, .next-btn:hover {
+    background: #ff0000;
+    transform: scale(1.05);
+}
+
+.tries-info {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    letter-spacing: 1px;
+    text-shadow: 0 0 4px #000, 0 0 2px #2a2a40;
+}
+
+.guess-feedback {
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    min-height: 1.5em;
+    font-family: 'Press Start 2P', cursive;
+    color: #ffcb05;
+    text-shadow: 0 0 4px #2a2a40;
+} 

@@ -7,7 +7,7 @@ body {
 
 .custom-navbar {
   background-color: black;
-  height: 4rem;
+  height: 100%;
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
@@ -92,7 +92,8 @@ main {
 .games-title {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: #ffcb05;
+  font-family: 'Press Start 2P', cursive;
+  padding-bottom: 30px;
 }
 
 .games-grid {
@@ -122,13 +123,12 @@ main {
 .game-card h3 {
   margin: 1rem 0 0.5rem;
   color: #ffcb05;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 28px;
+  font-size: 2.25rem;
  
 }
 
 .game-card p {
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   color: #ccc;
 }
 
@@ -136,17 +136,21 @@ main {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.5rem 1.5rem;
-  background-color: #ff5656;
+  background-color: #ca3a3a;
   color: white;
   text-decoration: none;
   border-radius: 6px;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   font-family: 'Press Start 2P', cursive;
+  position: relative;
+  top: 0;
 }
 
 .play-button:hover {
-  background-color: #e03e3e;
+  background-color: #ff0000;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px) scale(1.05);
 }
 
 .play-button.disabled {
