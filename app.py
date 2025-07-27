@@ -35,7 +35,19 @@ def get_pokemon_type(pokemon_name):
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    pokemon_list = []
+    try:
+        response = requests.get('https://pokeapi.co/api/v2/pokemon?limit=10000')
+        response.raise_for_status()
+        data = response.json()
+        pokemon_list = [pokemon['name'] for pokemon in data['results']]
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching all Pokémon names for home page: {e}")
+        pokemon_list = []
+    except KeyError:
+        print("API response for all Pokémon names did not contain 'results' key.")
+        pokemon_list = []
+    return render_template('home.html', pokemon_list=pokemon_list)
 
 
 @app.route('/pokedex', methods=['GET', 'POST'])
@@ -92,4 +104,4 @@ def pokemon_quiz():
 
         
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0") 

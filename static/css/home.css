@@ -9,23 +9,49 @@
   font-family: 'Poppins', sans-serif;
 }
 
+html, body {
+  height: 100%;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
 body {
   background: linear-gradient(100deg, #1a2040 0%, #090b16 100%);
   color: #fff;
   overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
 }
 
+/* Remove sprite styles */
+.sprite, #charmander, #pikachu, #squirtle, #bulbsaur { display: none !important; }
 
-/* HERO SECTION */
+/* Remove search bar and user score styles */
+.search-container, #userScore { display: none !important; }
+
+/* Animated Pokéball Background - start below navbar */
+.animated-bg {
+  display: none !important;
+}
+
+/* Glassmorphism for hero and cards */
+#hero, .pokemon-of-day-card, .pokemon-trivia, .search-container {
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(12px);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+
 header {
-  height: 100vh;
+  min-height: 60vh;
+  margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  z-index: 1;
 }
 
 header h1 {
@@ -86,19 +112,241 @@ header p {
 }
 
 /* SPRITES */
-.sprite {
+/* --- Home Search Bar --- */
+.search-container {
+  margin: 2.5rem auto 1.5rem auto;
+  max-width: 400px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.10);
+}
+#homePokemonInput {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 2.5rem;
+  border-radius: 1.5rem;
+  border: 2px solid var(--accent);
+  font-size: 1.1rem;
+  outline: none;
+  margin-bottom: 0.5rem;
+  background: transparent;
+  color: #fff;
+}
+.search-icon {
   position: absolute;
-  width: 160px;
-  image-rendering: pixelated;
-  animation: bob 4s infinite ease-in-out;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.2rem;
+  height: 1.2rem;
+  opacity: 0.7;
 }
 
-@keyframes bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.autocomplete-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #222;
+  border-radius: 0 0 1rem 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  z-index: 10;
+  animation: fadeIn 0.3s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.suggestion-item {
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  color: #fff;
+  border-bottom: 1px solid #333;
+  transition: background 0.2s, color 0.2s, padding-left 0.2s;
+}
+.suggestion-item .highlight {
+  color: var(--accent);
+  font-weight: bold;
+}
+.suggestion-item:hover {
+  background: var(--accent);
+  color: #222;
+  padding-left: 2rem;
 }
 
-#charmander { bottom: 28%; left: 10%; }
-#pikachu { bottom: 18%; right: 8%; }
-#squirtle { top: 12%; right: 15%; }
-#bulbsaur {top: 12%; left: 15%;}
+/* --- Pokémon of the Day Card --- */
+.pokemon-of-day-card {
+  background: rgba(255,255,255,0.13);
+  border: 3px solid var(--accent);
+  border-radius: 2.5rem;
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin: 0 auto 0 auto;
+  max-width: 480px;
+  min-width: 320px;
+  min-height: 380px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  color: #fff;
+  transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
+  position: relative;
+  cursor: pointer;
+}
+.pokemon-of-day-card:hover {
+  box-shadow: 0 16px 48px rgba(255,215,0,0.18), 0 2px 16px rgba(0,0,0,0.18);
+  border-color: #ffe066;
+  transform: translateY(-6px) scale(1.03);
+}
+.pokemon-of-day-card img {
+  margin-bottom: 0.5rem;
+  border-radius: 1.5rem;
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.view-pokedex-link {
+  display: inline-block;
+  margin-top: 0.8rem;
+  color: var(--accent);
+  background: #222;
+  border-radius: 1.2rem;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--accent);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  font-size: 1.1rem;
+}
+.view-pokedex-link:hover {
+  background: var(--accent);
+  color: #222;
+  box-shadow: 0 4px 16px rgba(255,215,0,0.18);
+}
+
+/* Remove trivia styles */
+.pokemon-trivia, .trivia-icon { display: none !important; }
+
+/* --- Footer Enhancements --- */
+footer {
+  margin-top: 3.5rem;
+  padding: 1.2rem 0 0.5rem 0;
+  background: linear-gradient(90deg, #1a2040 0%, #090b16 100%);
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+}
+.footer-content a {
+  color: var(--accent);
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+.footer-content a:hover {
+  text-decoration: underline;
+}
+.footer-icons {
+  display: inline-flex;
+  gap: 0.7rem;
+  vertical-align: middle;
+}
+.footer-icons svg {
+  width: 1.3rem;
+  height: 1.3rem;
+  fill: var(--accent);
+  vertical-align: middle;
+}
+
+/* Responsive Layout */
+@media (max-width: 700px) {
+  header {
+    min-height: 40vh;
+    padding: 2rem 0.5rem;
+  }
+  main {
+    gap: 2.5rem;
+    margin-top: 1.5rem;
+  }
+  .pokemon-of-day-card, .pokemon-trivia {
+    max-width: 95vw;
+  }
+  .actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Smooth scroll animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#hero {
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: visible;
+  z-index: 1;
+}
+
+.hero-card { display: unset; background: none; box-shadow: none; border-radius: 0; padding: 0; }
+
+#hero h1 {
+  white-space: nowrap;
+  font-size: 2.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 700px) {
+  #hero {
+    min-height: 25vh;
+    padding: 2rem 0.5rem;
+  }
+  #hero h1 {
+    font-size: 1.5rem;
+  }
+}
+
+.bg-region-map {
+  position: absolute;
+  top: 50%;
+  width: 340px;
+  max-width: 30vw;
+  opacity: 0.10;
+  pointer-events: none;
+  transform: translateY(-50%);
+  z-index: 0;
+  filter: grayscale(1) blur(1px);
+}
+.bg-region-map-left {
+  left: 0;
+}
+.bg-region-map-right {
+  right: 0;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .bg-region-map {
+    width: 180px;
+    max-width: 40vw;
+    opacity: 0.13;
+  }
+}
+@media (max-width: 600px) {
+  .bg-region-map {
+    display: none;
+  }
+}
