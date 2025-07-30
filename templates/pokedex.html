@@ -134,7 +134,7 @@
     {% endif %}
 
     <script>
-        const allPokemonNames = {{ pokemon_list | tojson }};
+        const allPokemonNames = {{ pokemon_list | tojson | safe }};
         
         // Debug: Check if pokemon list is loaded
         console.log('Pokemon list loaded:', allPokemonNames ? allPokemonNames.length : 'No data', 'Pokemon');
@@ -226,7 +226,7 @@
             evolutionStages.forEach((stage, index) => {
                 const pokemonId = stage.url.split('/').slice(-2)[0];
                 evolutionHTML += `
-                    <div class="evolution-pokemon" data-pokemon-id="${pokemonId}">
+                    <div class="evolution-pokemon" data-pokemon-id="${pokemonId}" onclick="searchPokemon('${stage.name}')" style="cursor: pointer;">
                         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png" 
                              alt="${stage.name}" 
                              onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png'">
@@ -278,6 +278,23 @@
                     card.style.animationDelay = `${0.8 + index * 0.2}s`;
                 });
             }
+        }
+
+        // Function to search for a Pokémon (for evolution chain clicks)
+        function searchPokemon(pokemonName) {
+            // Create a form and submit it to search for the clicked Pokémon
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = window.location.pathname;
+            
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'pokemon_name';
+            input.value = pokemonName;
+            
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
         }
 
         // Initialize when page loads

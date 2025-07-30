@@ -1,6 +1,5 @@
 .pokemon-guess-bg {
     min-height: 100vh;
-    background: linear-gradient(120deg, #23243a 0%, #1a1a2e 100%);
     position: relative;
     overflow-x: hidden;
 }
@@ -86,7 +85,9 @@
 .guess-bg-pokemon50 { right: 30vw; bottom: 25vw; width: 30px; opacity: 0.08; transform: rotate(15deg); }
 
 .pokemon-guess-container {
-    background: linear-gradient(120deg, #23243a 0%, #1a1a2e 100%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 18px;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     max-width: 400px;

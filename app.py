@@ -71,13 +71,23 @@ def pokedex():
         print("API response for all Pokémon names did not contain 'results' key.")
         pokemon_list = [] 
     
-
-    if request.method == 'POST':
+    # Check for pokemon parameter in GET request (from homepage link)
+    if request.method == 'GET' and request.args.get('pokemon'):
+        name = request.args.get('pokemon').lower()
+        pokemon_data = Pokeverse(name) 
+        if pokemon_data: 
+            pokemon_info = pokemon_data
+            if pokemon_data['types']: 
+                primary_type = pokemon_data['types'][0]['type']['name']
+            else:
+                primary_type = 'normal' 
+    
+    # Handle POST request (from search form)
+    elif request.method == 'POST':
         name = request.form['pokemon_name'].lower()
         pokemon_data = Pokeverse(name) 
         if pokemon_data: 
             pokemon_info = pokemon_data
-           
             if pokemon_data['types']: 
                 primary_type = pokemon_data['types'][0]['type']['name']
             else:

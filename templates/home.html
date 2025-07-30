@@ -4,24 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pokedex</title>
+  <title>Pokeverse</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-
 </head>
 
 <body>
-  <div>
-    <nav class="custom-navbar" style="height: 100px">
+  <!-- Background Elements -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- Navigation -->
+    <nav class="custom-navbar">
       <div class="navbar-container">
         <div class="logo-container">
           <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
         </div>
-
         <span class="heading">PokeVerse</span>
-
         <div class="nav-links">
           <a href="{{url_for('home')}}" class="nav-link">Home</a>
           <a href="{{ url_for('pokedex') }}" class="nav-link">Pokédex</a>
@@ -29,111 +28,64 @@
         </div>
       </div>
     </nav>
-  </div>
 
-  <!-- Animated Pokéball Background (move below navbar) -->
-  <canvas class="animated-bg" id="pokeballBg"></canvas>
-
-  <!-- ──────────── HERO ──────────── -->
-  <header id="hero" style="margin-top: 2.5rem;">
-    <h1>Welcome to Pokeverse!</h1>
-    <p>Discover the world of Pokémon</p>
-    <div class="actions">
-      <a href="{{ url_for('pokedex') }}" class="primary">Explore Pokedex</a>
-      <a href="{{ url_for('games') }}">Play Games</a>
-    </div>
-  </header>
-
-  <main style="display: flex; flex-direction: column; align-items: center; gap: 3.5rem; margin-top: 2.5rem; position: relative; min-height: 500px;">
-    <img src="/static/images/kanto-map.png" alt="Kanto Map" class="bg-region-map bg-region-map-left">
-    <img src="/static/images/johto-map.png" alt="Johto Map" class="bg-region-map bg-region-map-right">
-    <div id="pokemonOfDay" class="pokemon-of-day-card fade-in"></div>
+  <!-- Main Content -->
+  <main>
+    <header id="hero">
+      <h1>Welcome to Pokeverse!</h1>
+      <p>Discover the world of Pokémon</p>
+      <div class="actions">
+        <a href="{{ url_for('pokedex') }}" class="primary">Explore Pokedex</a>
+        <a href="{{ url_for('games') }}">Play Games</a>
+      </div>
+    </header>
+    <div id="pokemonOfDay" class="pokemon-of-day-card"></div>
   </main>
 
-  <!-- ──────────── FOOTER ──────────── -->
-  <footer>
-    <div class="footer-content">
-      <span>Powered by <a href="https://pokeapi.co/" target="_blank">PokéAPI</a></span> |
-      <span><a href="https://github.com/" target="_blank">Project GitHub</a></span>
-      <span class="footer-icons">
-        <a href="https://github.com/" target="_blank" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0112 6.84c.85.004 1.7.12 2.5.35 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .26.18.58.69.48A10.01 10.01 0 0022 12.26C22 6.58 17.52 2 12 2z"/></svg></a>
-      </span>
-      <span style="float:right;">&copy; Pokeverse</span>
-    </div>
-  </footer>
+
 
 <script>
-// --- Animated Pokéball Background ---
-const canvas = document.getElementById('pokeballBg');
-const ctx = canvas.getContext('2d');
-let balls = [];
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-function randomColor() {
-  const colors = ['#ffcb05', '#e3350d', '#3b4cca', '#b3a125'];
-  return colors[Math.floor(Math.random()*colors.length)];
-}
-function createBall() {
-  return {
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    r: 18+Math.random()*12,
-    dx: (Math.random()-0.5)*0.7,
-    dy: (Math.random()-0.5)*0.7,
-    color: randomColor(),
-    alpha: 0.18+Math.random()*0.12
-  };
-}
-for(let i=0;i<16;i++) balls.push(createBall());
-function drawBall(b) {
-  ctx.save();
-  ctx.globalAlpha = b.alpha;
-  ctx.beginPath();
-  ctx.arc(b.x, b.y, b.r, 0, 2*Math.PI);
-  ctx.fillStyle = b.color;
-  ctx.shadowColor = b.color;
-  ctx.shadowBlur = 16;
-  ctx.fill();
-  ctx.restore();
-}
-function animateBg() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  for(let b of balls) {
-    b.x += b.dx;
-    b.y += b.dy;
-    if(b.x<0||b.x>canvas.width) b.dx*=-1;
-    if(b.y<0||b.y>canvas.height) b.dy*=-1;
-    drawBall(b);
+// Particle System
+function createParticles() {
+  const particlesContainer = document.getElementById('particles');
+  const particleCount = 20;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 8 + 's';
+    particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+    particlesContainer.appendChild(particle);
   }
-  requestAnimationFrame(animateBg);
 }
-animateBg();
 
-// --- Pokémon of the Day ---
-const allPokemonNames = {{ pokemon_list | tojson }};
+// Pokémon of the Day
+const allPokemonNames = {{ pokemon_list | tojson | safe }};
 function getPokemonOfDay() {
+  if (!allPokemonNames || allPokemonNames.length === 0) {
+    return 'pikachu';
+  }
   const idx = new Date().getDate() % allPokemonNames.length;
   return allPokemonNames[idx];
 }
+
 async function renderPokemonOfDay() {
   const name = getPokemonOfDay();
   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
   const data = await res.json();
   const card = document.getElementById('pokemonOfDay');
   const type = data.types[0].type.name;
-  card.className = `pokemon-of-day-card fade-in type-${type}`;
+  card.className = `pokemon-of-day-card type-${type}`;
   card.innerHTML = `
-    <h2 style='font-size:2rem;margin-bottom:1rem;'>Pokémon of the Day</h2>
-    <img src="${data.sprites.other['official-artwork'].front_default}" alt="${name}" style="width:180px;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer;">
-    <div style='font-size:1.5rem;margin:1rem 0 0.5rem 0;'><b>${name.charAt(0).toUpperCase() + name.slice(1)}</b></div>
-    <div style='margin-bottom:0.5rem;'>Type: <span style='text-transform:capitalize;'>${data.types.map(t => t.type.name).join(', ')}</span></div>
-    <div style='margin-bottom:0.5rem;'>ID: #${data.id}</div>
+    <h2 style='font-size:1.5rem;margin-bottom:0.5rem;font-family: "Press Start 2P", cursive;'>Pokémon of the Day</h2>
+    <img src="${data.sprites.other['official-artwork'].front_default}" alt="${name}" style="width:120px;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer;">
+    <div style='font-size:1.2rem;margin:0.5rem 0 0.3rem 0;font-family: "Press Start 2P", cursive;'><b>${name.charAt(0).toUpperCase() + name.slice(1)}</b></div>
+    <div style='margin-bottom:0.3rem;font-size:0.9rem;font-family: "Press Start 2P", cursive;'>Type: <span style='text-transform:capitalize;'>${data.types.map(t => t.type.name).join(', ')}</span></div>
+    <div style='margin-bottom:0.3rem;font-size:0.9rem;font-family: "Press Start 2P", cursive;'>ID: #${data.id}</div>
     <a href="/pokedex?pokemon=${name}" class="view-pokedex-link">View in Pokédex</a>
   `;
+  
   // Add hover effect to image
   const img = card.querySelector('img');
   img.addEventListener('mouseover', () => {
@@ -145,19 +97,10 @@ async function renderPokemonOfDay() {
     img.style.boxShadow = '';
   });
 }
-renderPokemonOfDay();
 
-// --- Scroll Animations ---
-function revealOnScroll() {
-  document.querySelectorAll('.fade-in').forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if(rect.top < window.innerHeight-60) {
-      el.classList.add('visible');
-    }
-  });
-}
-window.addEventListener('scroll', revealOnScroll);
-window.addEventListener('load', revealOnScroll);
+// Initialize
+renderPokemonOfDay();
+window.addEventListener('load', createParticles);
 </script>
 
 </body>

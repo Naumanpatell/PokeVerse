@@ -7,37 +7,98 @@
     --accent: #FFD700;
 }
 
+body {
+    background: linear-gradient(135deg, #1a2040 0%, #090b16 50%, #2a3f5f 100%);
+    color: #fff;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+/* Dynamic Background for all pages */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 203, 5, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(227, 53, 13, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(59, 76, 202, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 60% 60%, rgba(179, 161, 37, 0.12) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Floating Pokéballs */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 203, 5, 0.1) 2px, transparent 2px),
+        radial-gradient(circle at 90% 80%, rgba(227, 53, 13, 0.08) 3px, transparent 3px),
+        radial-gradient(circle at 30% 70%, rgba(59, 76, 202, 0.06) 2px, transparent 2px),
+        radial-gradient(circle at 70% 30%, rgba(179, 161, 37, 0.09) 2px, transparent 2px),
+        radial-gradient(circle at 50% 10%, rgba(255, 203, 5, 0.07) 2px, transparent 2px),
+        radial-gradient(circle at 20% 90%, rgba(227, 53, 13, 0.05) 3px, transparent 3px);
+    background-size: 200px 200px, 300px 300px, 250px 250px, 180px 180px, 220px 220px, 280px 280px;
+    pointer-events: none;
+    z-index: -1;
+    animation: floatingPokeballs 15s linear infinite;
+}
+
+@keyframes floatingPokeballs {
+    0% { transform: translateY(0px) translateX(0px); }
+    25% { transform: translateY(-20px) translateX(10px); }
+    50% { transform: translateY(-10px) translateX(-15px); }
+    75% { transform: translateY(-30px) translateX(5px); }
+    100% { transform: translateY(0px) translateX(0px); }
+}
+
 .bg-electric {
     --accent: #FFFFFF;
 }
 
 .custom-navbar {
     background-color: black;
-    height: 4rem;
+    height: clamp(3rem, 8vh, 4rem);
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1000;
 }
 
 .navbar-container {
     display: flex;
     align-items: center;
-    padding-left: 1rem;
+    padding-left: clamp(0.5rem, 2vw, 1rem);
+    padding-right: clamp(0.5rem, 2vw, 1rem);
+    height: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .nav-links {
     display: flex;
     margin-left: auto;
-    gap: 20px;
-    padding-right: 20px;
+    gap: clamp(10px, 2vw, 20px);
+    padding-right: clamp(10px, 2vw, 20px);
+    flex-wrap: wrap;
 }
 
 .nav-link {
     color: white;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
     font-weight: 500;
-    padding: 8px 12px;
+    padding: clamp(6px, 1.5vw, 8px) clamp(8px, 2vw, 12px);
     border-radius: 4px;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -46,11 +107,11 @@
 }
 
 .pokeball {
-    width: 3.65rem;
-    height: 3.65rem;
-    margin-right: 10px;
+    width: clamp(2.5rem, 6vw, 3.65rem);
+    height: clamp(2.5rem, 6vw, 3.65rem);
+    margin-right: clamp(5px, 1.5vw, 10px);
     transition: transform 0.6s ease-in-out;
-    margin-top: 25px;
+    margin-top: clamp(15px, 3vh, 25px);
 }
 
 .pokeball:hover {
@@ -59,11 +120,12 @@
 
 .heading {
     font-family: 'Press Start 2P', cursive;
-    font-size: 2.6rem;
+    font-size: clamp(1.5rem, 4vw, 2.6rem);
     color: white;
     text-shadow: 0 0 5px red;
     transition: all 0.3s ease;
-    margin-top: 25px;
+    margin-top: clamp(15px, 3vh, 25px);
+    white-space: nowrap;
 }
 
 .heading:hover {
@@ -77,30 +139,475 @@
     to { transform: scale(1.03); }
 }
 
-.bg-main {
-    background: linear-gradient(100deg, #1a2040 0%, #090b16 100%);
-    color: #fff;
+
+
+/* Fire Type - Warm and Fiery */
+.bg-fire { 
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 25%, #ff4e50 50%, #f9d423 75%, #ff6b35 100%);
+    color: white;
+    position: relative;
     overflow-x: hidden;
 }
 
-.bg-fire { background: linear-gradient(to bottom, #ff7e5f, #feb47b); }
-.bg-water { background: linear-gradient(to right, #43cea2, #185a9d); }
-.bg-grass { background: linear-gradient(to top, #56ab2f, #a8e063); }
-.bg-electric { background: radial-gradient(circle, #fff700, #f0c000, #f9d423); color: black; }
-.bg-psychic { background: linear-gradient(to bottom, #bc4e9c, #f80759); }
-.bg-fairy { background: linear-gradient(to bottom, #f096d6, #ef79a0); color: black; }
-.bg-dark { background: linear-gradient(to bottom, #4a4a4a, #2a2a2a); }
-.bg-normal { background-color: wheat; color: black; }
-.bg-fighting { background: linear-gradient(to right, #d32f2f, #f57c00); }
-.bg-flying { background: linear-gradient(to bottom, #89f7fe, #66a6ff); color: black; }
-.bg-rock { background: #6d4c41; color: white; }
-.bg-ground { background: linear-gradient(to top, #c2b280, #a0522d); }
-.bg-bug { background: linear-gradient(to bottom, #a8b820, #d0f0c0); }
-.bg-ghost { background: linear-gradient(to bottom, #5f4b8b, #2c2a4a); color: white; }
-.bg-steel { background: linear-gradient(to bottom, #b0bec5, #78909c); }
-.bg-ice { background: linear-gradient(to right, #74ebd5, #acb6e5); }
-.bg-dragon { background: linear-gradient(to bottom, #6a11cb, #2575fc); }
-.bg-poison { background: linear-gradient(to right, #9b59b6, #8e44ad); }
+.bg-fire::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(255, 107, 53, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(249, 212, 35, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: fireGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes fireGlow {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Water Type - Flowing and Deep */
+.bg-water { 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #43cea2 50%, #185a9d 75%, #667eea 100%);
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-water::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(67, 206, 162, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: waterFlow 6s ease-in-out infinite;
+}
+
+@keyframes waterFlow {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Grass Type - Natural and Vibrant */
+.bg-grass { 
+    background: linear-gradient(135deg, #56ab2f 0%, #a8e063 25%, #7cb342 50%, #8bc34a 75%, #56ab2f 100%);
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-grass::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 25% 75%, rgba(86, 171, 47, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(168, 224, 99, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: grassSway 5s ease-in-out infinite;
+}
+
+@keyframes grassSway {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(1deg); }
+}
+
+/* Electric Type - Bright and Energetic */
+.bg-electric { 
+    background: linear-gradient(135deg, #fff700 0%, #f0c000 25%, #ffd700 50%, #ffff00 75%, #fff700 100%);
+    color: black;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-electric::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 40% 60%, rgba(255, 247, 0, 0.5) 0%, transparent 50%),
+                radial-gradient(circle at 60% 40%, rgba(255, 215, 0, 0.4) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: electricSpark 2s ease-in-out infinite;
+}
+
+@keyframes electricSpark {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Psychic Type - Mystical and Dreamy */
+.bg-psychic { 
+    background: linear-gradient(135deg, #bc4e9c 0%, #f80759 25%, #ff6b9d 50%, #c44569 75%, #bc4e9c 100%);
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-psychic::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(188, 78, 156, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(248, 7, 89, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: psychicFloat 7s ease-in-out infinite;
+}
+
+@keyframes psychicFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+}
+
+/* Fairy Type - Magical and Soft */
+.bg-fairy { 
+    background: linear-gradient(135deg, #f096d6 0%, #ef79a0 25%, #ffb6c1 50%, #ffc0cb 75%, #f096d6 100%);
+    color: black;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-fairy::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 25% 75%, rgba(240, 150, 214, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(255, 182, 193, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: fairySparkle 3s ease-in-out infinite;
+}
+
+@keyframes fairySparkle {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Dark Type - Mysterious and Deep */
+.bg-dark { 
+    background: linear-gradient(135deg, #2c2c2c 0%, #4a4a4a 25%, #2a2a2a 50%, #1a1a1a 75%, #2c2c2c 100%);
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-dark::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 80%, rgba(74, 74, 74, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(26, 26, 26, 0.4) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: darkShimmer 8s ease-in-out infinite;
+}
+
+@keyframes darkShimmer {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+}
+
+/* Normal Type - Balanced and Calm */
+.bg-normal { 
+    background: linear-gradient(135deg, #f5f5dc 0%, #deb887 25%, #d2b48c 50%, #f4a460 75%, #f5f5dc 100%);
+    color: black;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-normal::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(245, 245, 220, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(222, 184, 135, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Fighting Type - Strong and Intense */
+.bg-fighting { 
+    background: linear-gradient(135deg, #d32f2f 0%, #f57c00 25%, #ff5722 50%, #e64a19 75%, #d32f2f 100%);
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-fighting::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 25% 75%, rgba(211, 47, 47, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(245, 124, 0, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: fightingPulse 3s ease-in-out infinite;
+}
+
+@keyframes fightingPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* Flying Type - Light and Airy */
+.bg-flying { 
+    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 25%, #87ceeb 50%, #b0e0e6 75%, #89f7fe 100%);
+    color: black;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-flying::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(137, 247, 254, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(102, 166, 255, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: flyingDrift 6s ease-in-out infinite;
+}
+
+@keyframes flyingDrift {
+    0%, 100% { transform: translateX(0px); }
+    50% { transform: translateX(10px); }
+}
+
+/* Rock Type - Solid and Earthy */
+.bg-rock { 
+    background: linear-gradient(135deg, #8b4513 0%, #a0522d 25%, #6d4c41 50%, #8b7355 75%, #8b4513 100%);
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-rock::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 25% 75%, rgba(139, 69, 19, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(160, 82, 45, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Ground Type - Natural and Stable */
+.bg-ground { 
+    background: linear-gradient(135deg, #d2b48c 0%, #c2b280 25%, #a0522d 50%, #8b4513 75%, #d2b48c 100%);
+    color: black;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-ground::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(210, 180, 140, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(194, 178, 128, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Bug Type - Organic and Lively */
+.bg-bug { 
+    background: linear-gradient(135deg, #a8b820 0%, #9acd32 25%, #d0f0c0 50%, #90ee90 75%, #a8b820 100%);
+    color: black;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-bug::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 25% 75%, rgba(168, 184, 32, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(208, 240, 192, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: bugCrawl 4s ease-in-out infinite;
+}
+
+@keyframes bugCrawl {
+    0%, 100% { transform: translateX(0px) translateY(0px); }
+    50% { transform: translateX(5px) translateY(-5px); }
+}
+
+/* Ghost Type - Ethereal and Mysterious */
+.bg-ghost { 
+    background: linear-gradient(135deg, #5f4b8b 0%, #2c2a4a 25%, #4b0082 50%, #8a2be2 75%, #5f4b8b 100%);
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-ghost::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(95, 75, 139, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(44, 42, 74, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: ghostWisp 5s ease-in-out infinite;
+}
+
+@keyframes ghostWisp {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.03); }
+}
+
+/* Steel Type - Metallic and Strong */
+.bg-steel { 
+    background: linear-gradient(135deg, #b0bec5 0%, #78909c 25%, #607d8b 50%, #455a64 75%, #b0bec5 100%) !important;
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-steel::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 25% 75%, rgba(176, 190, 197, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(120, 144, 156, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: steelShine 4s ease-in-out infinite;
+}
+
+@keyframes steelShine {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* Ice Type - Cool and Crystalline */
+.bg-ice { 
+    background: linear-gradient(135deg, #74ebd5 0%, #acb6e5 25%, #87ceeb 50%, #b0e0e6 75%, #74ebd5 100%) !important;
+    color: black;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-ice::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(116, 235, 213, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(172, 182, 229, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: iceCrystal 6s ease-in-out infinite;
+}
+
+@keyframes iceCrystal {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(2deg); }
+}
+
+/* Dragon Type - Majestic and Powerful */
+.bg-dragon { 
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 25%, #4a90e2 50%, #7b68ee 75%, #6a11cb 100%) !important;
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-dragon::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 25% 75%, rgba(106, 17, 203, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 75% 25%, rgba(37, 117, 252, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: dragonBreath 7s ease-in-out infinite;
+}
+
+@keyframes dragonBreath {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(1deg); }
+}
+
+/* Poison Type - Toxic and Mysterious */
+.bg-poison { 
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 25%, #a855f7 50%, #c084fc 75%, #9b59b6 100%) !important;
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-poison::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 70%, rgba(155, 89, 182, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(142, 68, 173, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: poisonBubble 4s ease-in-out infinite;
+}
+
+@keyframes poisonBubble {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
 
 .search-wrapper {
     background: rgba(255, 255, 255, 0.1);
@@ -113,23 +620,12 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    z-index: 1000;
+    isolation: isolate;
 }
 
-.search-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s ease;
-}
 
-.search-wrapper:hover::before {
-    left: 100%;
-}
 
 .search-wrapper:hover {
     transform: translateY(-5px);
@@ -159,6 +655,7 @@
     align-items: center;
     position: relative;
     outline: none;
+    z-index: 1001;
 }
 
 .search-input {
@@ -247,7 +744,7 @@
 
 .autocomplete-suggestions {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 0.5rem);
     left: 0;
     right: 0;
     background: rgba(0, 0, 0, 0.9);
@@ -256,10 +753,10 @@
     max-height: 300px;
     min-height: 50px;
     overflow-y: auto;
-    z-index: 9999;
+    z-index: 999999;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-    margin-top: 0.5rem;
+    margin-top: 0;
     opacity: 0;
     transform: translateY(-10px);
     transition: all 0.3s ease;
@@ -311,8 +808,13 @@
     display: none;
 }
 
+.search-container {
+    position: relative;
+    z-index: 1000;
+}
+
 .pokemon-display-container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 2rem;
     display: grid;
@@ -328,6 +830,23 @@
     border: 2px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.pokemon-main-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.pokemon-main-card:hover::before {
+    left: 100%;
 }
 
 .pokemon-main-card:hover {
@@ -420,8 +939,8 @@
 .type-fairy { background: #EE99AC; color: black; }
 
 .pokemon-stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
 }
 
@@ -507,7 +1026,7 @@
 .info-label {
     font-family: 'Press Start 2P', cursive;
     font-size: 0.8rem;
-    color: #888888;
+    color: #ffffff;
 }
 
 .info-value {
@@ -518,8 +1037,8 @@
 }
 
 .moves-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
 }
 
@@ -665,16 +1184,18 @@
 
 @media (max-width: 1024px) {
     .pokemon-display-container {
-        grid-template-columns: 1fr;
+        max-width: 900px;
         gap: 1.5rem;
     }
-    
-    .pokemon-stats-grid {
-        grid-template-columns: 1fr;
     }
+    
+@media (max-width: 768px) {
+    .pokemon-display-container {
+        max-width: 700px;
+        grid-template-columns: 1fr;
+        padding: 1rem;
 }
 
-@media (max-width: 768px) {
     .search-wrapper {
         padding: 1.5rem;
     }
@@ -698,10 +1219,6 @@
     .pokemon_img {
         width: 150px;
         height: 150px;
-    }
-    
-    .moves-list {
-        grid-template-columns: 1fr;
     }
     
     .evolution-chain {
@@ -737,6 +1254,7 @@
 
 @media (max-width: 480px) {
     .pokemon-display-container {
+        max-width: 600px;
         padding: 1rem;
     }
     
@@ -768,6 +1286,101 @@
     
     .evolution-name {
         font-size: 0.6rem;
+    }
+    
+    /* Mobile navbar adjustments */
+    .navbar-container {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 0.5rem;
+    }
+    
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+        gap: 0.5rem;
+    }
+    
+    .nav-link {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .heading {
+        font-size: 1.2rem;
+        margin-top: 0;
+    }
+    
+    .pokeball {
+        width: 2rem;
+        height: 2rem;
+        margin-top: 0;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 320px) {
+    .navbar-container {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.3rem;
+    }
+    
+    .nav-links {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.3rem;
+        gap: 0.3rem;
+    }
+    
+    .nav-link {
+        font-size: 0.6rem;
+        padding: 0.3rem 0.5rem;
+    }
+    
+    .heading {
+        font-size: 1rem;
+        margin-top: 0;
+    }
+    
+    .pokeball {
+        width: 1.8rem;
+        height: 1.8rem;
+        margin-top: 0;
+    }
+}
+
+/* Landscape orientation for mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .custom-navbar {
+        height: 3rem;
+    }
+    
+    .navbar-container {
+        padding: 0.3rem 0.5rem;
+    }
+    
+    .nav-links {
+        gap: 0.5rem;
+    }
+    
+    .nav-link {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.5rem;
+    }
+    
+    .heading {
+        font-size: 1.2rem;
+        margin-top: 0;
+    }
+    
+    .pokeball {
+        width: 2rem;
+        height: 2rem;
+        margin-top: 0;
     }
 }
 
