@@ -5,11 +5,10 @@
     <title>Pokémon Guess Game</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/games.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pokemon_guess.css') }}">
 </head>
 <body>
-    <nav class="custom-navbar">
+    <nav class="custom-navbar" style="height: 100px">
         <div class="navbar-container">
             <div class="logo-container">
                 <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
@@ -25,72 +24,260 @@
     <div class="bg-orb bg-orb1"></div>
     <div class="bg-orb bg-orb2"></div>
     <div class="bg-orb bg-orb3"></div>
+    
+    <!-- Floating particles for extra visual appeal -->
+    <div class="floating-particle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+    <div class="floating-particle" style="right: 15%; top: 40%; animation-delay: 1s;"></div>
+    <div class="floating-particle" style="left: 20%; bottom: 30%; animation-delay: 2s;"></div>
+    <div class="floating-particle" style="right: 25%; bottom: 20%; animation-delay: 3s;"></div>
+    
     <div class="pokemon-guess-container outlined">
         <h2 class="guess-title">Who's That Pokémon?</h2>
-        <div class="pokemon-image-wrapper">
-            <img id="pokemon-image" class="pokemon-silhouette" src="" alt="Pokémon silhouette">
+        
+        <!-- Difficulty Selection -->
+        <div class="difficulty-selector">
+            <h3>Select Difficulty:</h3>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+            </div>
         </div>
-        <div id="tries-info" class="tries-info">Tries left: 3</div>
-        <form id="guess-form" autocomplete="off">
-            <input type="text" id="guess-input" class="guess-input" placeholder="Enter Pokémon name" required>
-            <button type="submit" class="guess-btn">Guess</button>
-        </form>
-        <div id="guess-feedback" class="guess-feedback"></div>
-        <button id="next-btn" class="next-btn" style="display:none;">Next Pokémon</button>
+        
+        <!-- Game Status Bar -->
+        <div class="game-status">
+            <div id="tries-info" class="tries-info">Tries left: 5</div>
+            <div id="score-display" class="score-display">Score: 0</div>
+        </div>
+        
+        <div class="game-layout">
+            <!-- Left side: Pokémon Image -->
+            <div class="pokemon-image-section">
+                <div class="pokemon-image-wrapper">
+                    <img id="pokemon-image" class="pokemon-silhouette" src="" alt="Pokémon silhouette">
+                </div>
+            </div>
+            
+            <!-- Right side: Game Information -->
+            <div class="game-info-section">
+                <div id="hint-display" class="hint-display"></div>
+                <form id="guess-form" autocomplete="off">
+                    <input type="text" id="guess-input" class="guess-input" placeholder="Enter Pokémon name" required>
+                    <button type="submit" class="guess-btn">Guess</button>
+                </form>
+                <div id="guess-feedback" class="guess-feedback"></div>
+                <button id="next-btn" class="next-btn" style="display:none;">Next Pokémon</button>
+            </div>
+        </div>
     </div>
     <script>
-        let triesLeft = 3;
+        // Game state
+        let currentDifficulty = 'easy';
+        let triesLeft = 5;
+        let score = 0;
+        let currentPokemon = null;
+        let currentPokemonData = null;
+
+        // Difficulty settings
+        const difficultySettings = {
+            easy: { tries: 5, imageSize: '200px', showHint: true, points: 10 },
+            medium: { tries: 3, imageSize: '180px', showHint: true, points: 20 },
+            hard: { tries: 1, imageSize: '150px', showHint: false, points: 50 }
+        };
+
+        // Sound effects (simple audio feedback)
+        const sounds = {
+            correct: new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT'),
+            incorrect: new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT'),
+            gameOver: new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT')
+        };
+
+        // Initialize difficulty buttons
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active button
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update difficulty
+                currentDifficulty = this.dataset.difficulty;
+                const settings = difficultySettings[currentDifficulty];
+                
+                // Update tries and image size
+                triesLeft = settings.tries;
+                document.getElementById('tries-info').textContent = `Tries left: ${triesLeft}`;
+                document.getElementById('pokemon-image').style.width = settings.imageSize;
+                document.getElementById('pokemon-image').style.height = settings.imageSize;
+                
+                // Clear previous game state
+                resetGameState();
+                
+                // Fetch new Pokémon
+                fetchRandomPokemon();
+            });
+        });
+
         function fetchRandomPokemon() {
             const id = Math.floor(Math.random() * 151) + 1;
             fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
                 .then(res => res.json())
                 .then(data => {
-                    window.currentPokemon = data.name.toLowerCase();
+                    currentPokemon = data.name.toLowerCase();
+                    currentPokemonData = data;
+                    
                     // Use the official artwork for better silhouette
                     const imageUrl = data.sprites.other['official-artwork'].front_default || data.sprites.front_default;
                     document.getElementById('pokemon-image').src = imageUrl;
                     document.getElementById('pokemon-image').style.filter = 'brightness(0) contrast(100%)';
-                    document.getElementById('guess-feedback').textContent = '';
-                    document.getElementById('next-btn').style.display = 'none';
-                    document.getElementById('guess-input').value = '';
-                    document.getElementById('guess-input').disabled = false;
-                    document.querySelector('.guess-btn').disabled = false;
-                    triesLeft = 3;
-                    document.getElementById('tries-info').textContent = 'Tries left: 3';
+                    
+                    // Reset game state
+                    resetGameState();
+                    
+                    // Show hint based on difficulty
+                    showHint();
                 });
+        }
+
+        function resetGameState() {
+            const settings = difficultySettings[currentDifficulty];
+            triesLeft = settings.tries;
+            
+            document.getElementById('guess-feedback').textContent = '';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('guess-input').value = '';
+            document.getElementById('guess-input').disabled = false;
+            document.querySelector('.guess-btn').disabled = false;
+            document.getElementById('tries-info').textContent = `Tries left: ${triesLeft}`;
+            document.getElementById('hint-display').textContent = '';
+        }
+
+        function showHint() {
+            if (!currentPokemonData) return;
+            
+            const settings = difficultySettings[currentDifficulty];
+            const hintDisplay = document.getElementById('hint-display');
+            
+            if (settings.showHint) {
+                const types = currentPokemonData.types.map(t => t.type.name).join(', ');
+                hintDisplay.textContent = `💡 Hint: This Pokémon is a ${types} type`;
+            } else {
+                hintDisplay.textContent = '';
+            }
+        }
+
+        function updateScore(points) {
+            score += points;
+            document.getElementById('score-display').textContent = `Score: ${score}`;
+        }
+
+        function playSound(soundName) {
+            try {
+                sounds[soundName].currentTime = 0;
+                sounds[soundName].play();
+            } catch (e) {
+                // Fallback for browsers that don't support audio
+                console.log(`Playing ${soundName} sound`);
+            }
         }
 
         document.getElementById('guess-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const guess = document.getElementById('guess-input').value.trim().toLowerCase();
-            if (guess === window.currentPokemon) {
-                document.getElementById('guess-feedback').textContent = `Correct! It's ${window.currentPokemon.charAt(0).toUpperCase() + window.currentPokemon.slice(1)}!`;
-                document.getElementById('pokemon-image').style.filter = 'none';
+            const feedback = document.getElementById('guess-feedback');
+            const pokemonImage = document.getElementById('pokemon-image');
+            const container = document.querySelector('.pokemon-guess-container');
+            
+            if (guess === currentPokemon) {
+                // Correct guess
+                const settings = difficultySettings[currentDifficulty];
+                const points = settings.points + (triesLeft * 5); // Bonus points for remaining tries
+                
+                feedback.textContent = `🎉 Correct! It's ${currentPokemon.charAt(0).toUpperCase() + currentPokemon.slice(1)}! 🎉`;
+                feedback.style.color = '#4ecdc4';
+                
+                // Reveal the Pokémon
+                pokemonImage.style.filter = 'none';
+                pokemonImage.style.animation = 'correctReveal 1s ease-out';
+                
+                // Container celebration effect
+                container.style.animation = 'correctPulse 0.5s ease-out';
+                
+                // Update score
+                updateScore(points);
+                
+                // Play sound
+                playSound('correct');
+                
+                // Show next button
                 document.getElementById('next-btn').style.display = 'inline-block';
                 document.getElementById('guess-input').disabled = true;
                 document.querySelector('.guess-btn').disabled = true;
                 document.getElementById('tries-info').textContent = '';
+                document.getElementById('hint-display').textContent = '';
+                
+                // Add confetti effect
+                createConfetti();
             } else {
                 triesLeft--;
+                
                 if (triesLeft > 0) {
-                    document.getElementById('guess-feedback').textContent = 'Incorrect! Try again!';
+                    feedback.textContent = '❌ Incorrect! Try again!';
+                    feedback.style.color = '#ff6b6b';
                     document.getElementById('tries-info').textContent = `Tries left: ${triesLeft}`;
+                    
+                    // Play sound
+                    playSound('incorrect');
+                    
+                    // Shake animation
+                    container.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => {
+                        container.style.animation = '';
+                    }, 500);
                 } else {
-                    document.getElementById('guess-feedback').textContent = `Out of tries! The answer was ${window.currentPokemon.charAt(0).toUpperCase() + window.currentPokemon.slice(1)}.`;
-                    document.getElementById('pokemon-image').style.filter = 'none';
+                    feedback.textContent = `💔 Out of tries! The answer was ${currentPokemon.charAt(0).toUpperCase() + currentPokemon.slice(1)}.`;
+                    feedback.style.color = '#ff6b6b';
+                    pokemonImage.style.filter = 'none';
+                    
+                    // Play sound
+                    playSound('gameOver');
+                    
+                    // Show next button
                     document.getElementById('next-btn').style.display = 'inline-block';
                     document.getElementById('guess-input').disabled = true;
                     document.querySelector('.guess-btn').disabled = true;
                     document.getElementById('tries-info').textContent = '';
+                    document.getElementById('hint-display').textContent = '';
                 }
             }
         });
+        
+        // Confetti effect function
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.background = ['#ffcb05', '#ff6b6b', '#4ecdc4', '#a8e6cf'][Math.floor(Math.random() * 4)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.borderRadius = '50%';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '1000';
+                confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
 
         document.getElementById('next-btn').addEventListener('click', function() {
             fetchRandomPokemon();
         });
 
-        // Initial load
+        // Initialize game
         fetchRandomPokemon();
     </script>
 </body>

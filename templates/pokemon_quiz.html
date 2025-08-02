@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="custom-navbar" style="height: 100px">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
+            </div>
+            <span class="heading">PokeVerse</span>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('pokedex') }}" class="nav-link">Pokédex</a>
+                <a href="{{ url_for('games') }}" class="nav-link">Games</a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding: 4rem 2rem; text-align: center; max-width: 1200px; margin: 0 auto;">
+        <h1 style="font-family: 'Press Start 2P', cursive; color: #ffcb05; margin-bottom: 2rem;">
+            Pokémon Quiz
+        </h1>
+        <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 3rem; border: 2px solid rgba(255, 255, 255, 0.2);">
+            <h2 style="font-family: 'Press Start 2P', cursive; color: white; margin-bottom: 1rem;">
+                Coming Soon!
+            </h2>
+            <p style="font-size: 1.2rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem;">
+                Test your knowledge across generations! This quiz feature will be available soon.
+            </p>
+            <a href="{{ url_for('games') }}" style="display: inline-block; padding: 1rem 2rem; background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; text-decoration: none; border-radius: 15px; font-weight: bold; transition: all 0.3s ease; font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">
+                Back to Games
+            </a>
+        </div>
+    </main>
+</body>
+</html> 

@@ -15,7 +15,7 @@
   <div class="particles" id="particles"></div>
   
   <!-- Navigation -->
-    <nav class="custom-navbar">
+    <nav class="custom-navbar" style="height: 100px">
       <div class="navbar-container">
         <div class="logo-container">
           <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
@@ -39,7 +39,35 @@
         <a href="{{ url_for('games') }}">Play Games</a>
       </div>
     </header>
-    <div id="pokemonOfDay" class="pokemon-of-day-card"></div>
+    {% if pokemon_of_day %}
+    <div class="pokemon-of-day-card type-{{ pokemon_of_day.types[0].type.name }}">
+      <h2 style='font-size:1.5rem;margin-bottom:0.5rem;font-family: "Press Start 2P", cursive;'>Pokémon of the Day</h2>
+      <img src="{{ pokemon_of_day.sprites.other['official-artwork'].front_default }}" 
+           alt="{{ pokemon_of_day.name }}" 
+           style="width:120px;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer;"
+           onmouseover="this.style.transform='scale(1.08) rotate(-3deg)';this.style.boxShadow='0 8px 32px rgba(255,255,255,0.18)'"
+           onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style='font-size:1.2rem;margin:0.5rem 0 0.3rem 0;font-family: "Press Start 2P", cursive;'>
+        <b>{{ pokemon_of_day.name | capitalize }}</b>
+      </div>
+      <div style='margin-bottom:0.3rem;font-size:0.9rem;font-family: "Press Start 2P", cursive;'>
+        Type: <span style='text-transform:capitalize;'>
+          {% for type in pokemon_of_day.types %}
+            {{ type.type.name }}{% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </span>
+      </div>
+      <div style='margin-bottom:0.3rem;font-size:0.9rem;font-family: "Press Start 2P", cursive;'>
+        ID: #{{ pokemon_of_day.id }}
+      </div>
+      <a href="/pokedex?pokemon={{ pokemon_of_day.name }}" class="view-pokedex-link">View in Pokédex</a>
+    </div>
+    {% else %}
+    <div class="pokemon-of-day-card">
+      <h2 style='font-size:1.5rem;margin-bottom:0.5rem;font-family: "Press Start 2P", cursive;'>Pokémon of the Day</h2>
+      <p style='font-size:1rem;font-family: "Press Start 2P", cursive;'>Loading...</p>
+    </div>
+    {% endif %}
   </main>
 
 
@@ -60,46 +88,7 @@ function createParticles() {
   }
 }
 
-// Pokémon of the Day
-const allPokemonNames = {{ pokemon_list | tojson | safe }};
-function getPokemonOfDay() {
-  if (!allPokemonNames || allPokemonNames.length === 0) {
-    return 'pikachu';
-  }
-  const idx = new Date().getDate() % allPokemonNames.length;
-  return allPokemonNames[idx];
-}
-
-async function renderPokemonOfDay() {
-  const name = getPokemonOfDay();
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-  const data = await res.json();
-  const card = document.getElementById('pokemonOfDay');
-  const type = data.types[0].type.name;
-  card.className = `pokemon-of-day-card type-${type}`;
-  card.innerHTML = `
-    <h2 style='font-size:1.5rem;margin-bottom:0.5rem;font-family: "Press Start 2P", cursive;'>Pokémon of the Day</h2>
-    <img src="${data.sprites.other['official-artwork'].front_default}" alt="${name}" style="width:120px;transition:transform 0.3s,box-shadow 0.3s;cursor:pointer;">
-    <div style='font-size:1.2rem;margin:0.5rem 0 0.3rem 0;font-family: "Press Start 2P", cursive;'><b>${name.charAt(0).toUpperCase() + name.slice(1)}</b></div>
-    <div style='margin-bottom:0.3rem;font-size:0.9rem;font-family: "Press Start 2P", cursive;'>Type: <span style='text-transform:capitalize;'>${data.types.map(t => t.type.name).join(', ')}</span></div>
-    <div style='margin-bottom:0.3rem;font-size:0.9rem;font-family: "Press Start 2P", cursive;'>ID: #${data.id}</div>
-    <a href="/pokedex?pokemon=${name}" class="view-pokedex-link">View in Pokédex</a>
-  `;
-  
-  // Add hover effect to image
-  const img = card.querySelector('img');
-  img.addEventListener('mouseover', () => {
-    img.style.transform = 'scale(1.08) rotate(-3deg)';
-    img.style.boxShadow = '0 8px 32px rgba(255,255,255,0.18)';
-  });
-  img.addEventListener('mouseout', () => {
-    img.style.transform = '';
-    img.style.boxShadow = '';
-  });
-}
-
 // Initialize
-renderPokemonOfDay();
 window.addEventListener('load', createParticles);
 </script>
 

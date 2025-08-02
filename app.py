@@ -1,5 +1,8 @@
+import os
 from flask import Flask, render_template, request
 import requests
+import random
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -31,11 +34,51 @@ def get_pokemon_type(pokemon_name):
         print(f"Error fetching Pokémon type for {pokemon_name}: {e}")
         return 'main' # Default to 'normal' on error or if no types are found
 
+def get_pokemon_of_day():
+    """Get a random Pokémon for the current day using a seeded random generator"""
+    try:
+        # Get all Pokémon names
+        response = requests.get('https://pokeapi.co/api/v2/pokemon?limit=10000')
+        response.raise_for_status()
+        data = response.json()
+        pokemon_list = [pokemon['name'] for pokemon in data['results']]
+        
+        if not pokemon_list:
+            return None
+            
+        # Create a daily seed for consistent random selection
+        today = datetime.now()
+        day_of_year = today.timetuple().tm_yday  # Day of year (1-366)
+        year = today.year
+        
+        # Combine year and day of year for a unique daily seed
+        daily_seed = year * 1000 + day_of_year
+        
+        # Set the random seed for today
+        random.seed(daily_seed)
+        
+        # Get a random Pokémon
+        random_pokemon = random.choice(pokemon_list)
+        
+        # Reset the random seed to avoid affecting other parts of the application
+        random.seed()
+        
+        return random_pokemon
+        
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching Pokémon list for daily Pokémon: {e}")
+        return None
+    except Exception as e:
+        print(f"Error in get_pokemon_of_day: {e}")
+        return None
+
 
 @app.route('/')
 @app.route('/home')
 def home():
     pokemon_list = []
+    pokemon_of_day = None
+    
     try:
         response = requests.get('https://pokeapi.co/api/v2/pokemon?limit=10000')
         response.raise_for_status()
@@ -47,7 +90,19 @@ def home():
     except KeyError:
         print("API response for all Pokémon names did not contain 'results' key.")
         pokemon_list = []
-    return render_template('home.html', pokemon_list=pokemon_list)
+    
+    # Get the Pokémon of the Day
+    pokemon_of_day_name = get_pokemon_of_day()
+    if pokemon_of_day_name:
+        try:
+            pokemon_of_day = Pokeverse(pokemon_of_day_name)
+        except Exception as e:
+            print(f"Error fetching Pokémon of the Day data: {e}")
+            pokemon_of_day = None
+    
+    return render_template('home.html', 
+                         pokemon_list=pokemon_list, 
+                         pokemon_of_day=pokemon_of_day)
 
 
 @app.route('/pokedex', methods=['GET', 'POST'])
@@ -114,4 +169,4 @@ def pokemon_quiz():
 
         
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0") 
+    app.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 5000))) 
