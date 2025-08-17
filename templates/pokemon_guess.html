@@ -10,14 +10,30 @@
 <body>
     <nav class="custom-navbar" style="height: 100px">
         <div class="navbar-container">
-            <div class="logo-container">
+            <div class="logo-section">
                 <img src="/static/images/pokeball.webp" class="pokeball" alt="Pokeball Logo" />
+                <span class="heading">PokeVerse</span>
             </div>
-            <span class="heading">PokeVerse</span>
-            <div class="nav-links">
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-links desktop-nav">
                 <a href="{{ url_for('home') }}" class="nav-link">Home</a>
                 <a href="{{ url_for('pokedex') }}" class="nav-link">Pokédex</a>
                 <a href="{{ url_for('games') }}" class="nav-link">Games</a>
+            </div>
+            
+            <!-- Mobile Hamburger Menu -->
+            <div class="hamburger-menu">
+                <div class="hamburger-icon" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="mobile-nav-dropdown" id="mobileNav">
+                    <a href="{{ url_for('home') }}" class="mobile-nav-link">Home</a>
+                    <a href="{{ url_for('pokedex') }}" class="mobile-nav-link">Pokédex</a>
+                    <a href="{{ url_for('games') }}" class="mobile-nav-link">Games</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -279,6 +295,29 @@
 
         // Initialize game
         fetchRandomPokemon();
+    </script>
+
+    <script>
+    // Hamburger Menu Toggle
+    function toggleMenu() {
+      const mobileNav = document.getElementById('mobileNav');
+      const hamburgerIcon = document.querySelector('.hamburger-icon');
+      
+      mobileNav.classList.toggle('active');
+      hamburgerIcon.classList.toggle('active');
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const hamburgerMenu = document.querySelector('.hamburger-menu');
+      const mobileNav = document.getElementById('mobileNav');
+      const hamburgerIcon = document.querySelector('.hamburger-icon');
+      
+      if (!hamburgerMenu.contains(event.target) && mobileNav.classList.contains('active')) {
+        mobileNav.classList.remove('active');
+        hamburgerIcon.classList.remove('active');
+      }
+    });
     </script>
 </body>
 </html> 
