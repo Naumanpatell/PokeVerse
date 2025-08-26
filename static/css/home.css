@@ -49,6 +49,16 @@
     z-index: 10;
 }
 
+/* Main container centering */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 100px);
+    padding: 0 2rem;
+}
+
 #hero h1 {
     font-family: 'Press Start 2P', cursive;
     font-size: clamp(2rem, 4.5vw, 3.5rem);
@@ -141,6 +151,10 @@
     position: relative;
     overflow: hidden;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .pokemon-of-day-card::before {
@@ -186,6 +200,11 @@
 
 /* Enhanced Responsive Design */
 @media (max-width: 768px) {
+    main {
+        padding: 0 1rem;
+        min-height: calc(100vh - 70px);
+    }
+    
     #hero {
         padding: 2.5rem 1rem;
         margin-bottom: 2rem;
@@ -235,6 +254,10 @@
 }
 
 @media (max-width: 480px) {
+    main {
+        padding: 0 0.8rem;
+    }
+    
     #hero {
         padding: 2rem 0.8rem;
         margin-bottom: 1.5rem;

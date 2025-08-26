@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Pokeverse Games</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -46,34 +47,24 @@
     <div class="games-grid">
 
       <!-- Game 1 -->
-      <div class="game-card">
+      <div class="game-card" role="button" tabindex="0">
         <h3>Guess the Pokémon</h3>
-                 <div class="silhouettes-container">
-           <img id="pokemon-silhouette-1" src="" alt="Pokémon silhouette" class="silhouette-img">
-           <img id="pokemon-silhouette-2" src="" alt="Pokémon silhouette" class="silhouette-img">
-           <img id="pokemon-silhouette-3" src="" alt="Pokémon silhouette" class="silhouette-img">
-           <img id="pokemon-silhouette-4" src="" alt="Pokémon silhouette" class="silhouette-img">
-           <img id="pokemon-silhouette-5" src="" alt="Pokémon silhouette" class="silhouette-img">
-           <img id="pokemon-silhouette-6" src="" alt="Pokémon silhouette" class="silhouette-img">
-           <img id="pokemon-silhouette-7" src="" alt="Pokémon silhouette" class="silhouette-img">
-           <img id="pokemon-silhouette-8" src="" alt="Pokémon silhouette" class="silhouette-img">
-         </div>
         <p>Can you guess the Pokémon based on silhouette?</p>
-        <a href="{{ url_for('pokemon_guess') }}" class="play-button">Play</a>
+        <a href="{{ url_for('pokemon_guess') }}" class="play-button" aria-label="Play Guess the Pokémon game">Play</a>
       </div>
 
       <!-- Game 2 -->
-      <div class="game-card">
+      <div class="game-card" role="button" tabindex="0">
         <h3>Pokémon Quiz</h3>
         <p>Test your knowledge across generations!</p>
-        <a href="{{ url_for('pokemon_quiz') }}" class="play-button">Play</a>
+        <a href="{{ url_for('pokemon_quiz') }}" class="play-button" aria-label="Play Pokémon Quiz game">Play</a>
       </div>
 
       <!-- Coming Soon -->
-      <div class="game-card">
+      <div class="game-card" role="button" tabindex="0">
         <h3>Coming Soon</h3>
         <p>More games will be added soon. Stay tuned!</p>
-        <a href="#" class="play-button disabled">Coming Soon</a>
+        <a href="#" class="play-button disabled" aria-label="Coming soon games" tabindex="-1">Coming Soon</a>
       </div>
     </div>
   </main>
@@ -100,28 +91,49 @@ document.addEventListener('click', function(event) {
   }
 });
 
-// Load multiple Pokémon silhouettes for the games page
-function loadPokemonSilhouettes() {
-  const pokemonList = ['pikachu', 'charizard', 'squirtle', 'bulbasaur', 'mewtwo', 'gengar', 'dragonite', 'gyarados'];
+// Enhanced mobile interactions for game cards
+document.addEventListener('DOMContentLoaded', function() {
+  const gameCards = document.querySelectorAll('.game-card');
   
-  pokemonList.forEach((pokemon, index) => {
-    console.log(`Loading ${pokemon}...`);
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
-      .then(response => response.json())
-      .then(data => {
-        const imageUrl = data.sprites.other['official-artwork'].front_default || data.sprites.front_default;
-        const silhouetteImg = document.getElementById(`pokemon-silhouette-${index + 1}`);
-        silhouetteImg.src = imageUrl;
-        console.log(`Loaded ${pokemon} with image: ${imageUrl}`);
-      })
-      .catch(error => {
-        console.error(`Error loading ${pokemon} silhouette:`, error);
+  gameCards.forEach(card => {
+    const playButton = card.querySelector('.play-button:not(.disabled)');
+    
+    if (playButton) {
+      // Add touch feedback for mobile
+      card.addEventListener('touchstart', function() {
+        this.style.transform = 'scale(0.98)';
+      }, { passive: true });
+      
+      card.addEventListener('touchend', function() {
+        this.style.transform = '';
+      }, { passive: true });
+      
+      // Keyboard navigation support
+      card.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          playButton.click();
+        }
       });
+    }
   });
-}
+  
+  // Prevent zoom on double tap for mobile
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', function(event) {
+    const now = (new Date()).getTime();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, false);
+  
+  // Add smooth scrolling for better mobile experience
+  if ('scrollBehavior' in document.documentElement.style) {
+    document.documentElement.style.scrollBehavior = 'smooth';
+  }
+});
 
-// Load the silhouettes when the page loads
-document.addEventListener('DOMContentLoaded', loadPokemonSilhouettes);
 </script>
 
 </body>

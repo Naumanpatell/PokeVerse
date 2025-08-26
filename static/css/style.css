@@ -177,6 +177,7 @@ body::after {
     transform: translateY(-10px);
     transition: all 0.3s ease;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
 }
 
 .mobile-nav-dropdown.active {
@@ -231,8 +232,8 @@ body::after {
 }
 
 .pokeball {
-    width: clamp(2.5rem, 6vw, 3.65rem);
-    height: clamp(2.5rem, 6vw, 3.65rem);
+    width: clamp(3rem, 7vw, 4.2rem);
+    height: clamp(3rem, 7vw, 4.2rem);
     margin-right: clamp(5px, 1.5vw, 10px);
     transition: transform 0.6s ease-in-out;
     margin-top: clamp(15px, 3vh, 25px);
@@ -244,7 +245,7 @@ body::after {
 
 .heading {
     font-family: 'Press Start 2P', cursive;
-    font-size: clamp(1.5rem, 4vw, 2.6rem);
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
     color: white;
     text-shadow: 0 0 5px red;
     transition: all 0.3s ease;
@@ -739,13 +740,12 @@ body::after {
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
     padding: 2rem;
-    margin: 2rem auto;
+    margin: 10rem auto;
     max-width: 600px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     position: relative;
     overflow: visible;
-    z-index: 1000;
     isolation: isolate;
 }
 
@@ -779,7 +779,7 @@ body::after {
     align-items: center;
     position: relative;
     outline: none;
-    z-index: 1001;
+    z-index: 10001;
 }
 
 .search-input {
@@ -934,7 +934,7 @@ body::after {
 
 .search-container {
     position: relative;
-    z-index: 1000;
+    z-index: 10000;
 }
 
 .pokemon-display-container {
@@ -1382,12 +1382,12 @@ body::after {
     }
     
     .heading {
-        font-size: clamp(1.2rem, 3vw, 1.5rem);
+        font-size: clamp(2.2rem, 5vw, 3rem);
     }
     
     .pokeball {
-        width: clamp(2rem, 4vw, 2.5rem);
-        height: clamp(2rem, 4vw, 2.5rem);
+        width: clamp(2.8rem, 6vw, 3.8rem);
+        height: clamp(2.8rem, 6vw, 3.8rem);
     }
     
     .navbar-container {
@@ -1451,13 +1451,13 @@ body::after {
     }
     
     .heading {
-        font-size: clamp(1rem, 2.8vw, 1.3rem);
+        font-size: clamp(1.2rem, 2.8vw, 1.3rem);
         line-height: 1;
     }
     
     .pokeball {
-        width: clamp(1.8rem, 3.5vw, 2.2rem);
-        height: clamp(1.8rem, 3.5vw, 2.2rem);
+        width: clamp(1.4rem, 3vw, 1.8rem);
+        height: clamp(1.4rem, 3vw, 1.8rem);
     }
     
     .hamburger-menu {
@@ -1508,13 +1508,13 @@ body::after {
     }
     
     .heading {
-        font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+        font-size: clamp(1.1rem, 2.5vw, 1.1rem);
         line-height: 1;
     }
     
     .pokeball {
-        width: clamp(1.5rem, 3vw, 1.8rem);
-        height: clamp(1.5rem, 3vw, 1.8rem);
+        width: clamp(1.2rem, 2.5vw, 1.5rem);
+        height: clamp(1.2rem, 2.5vw, 1.5rem);
     }
     
     .hamburger-menu {
@@ -1622,13 +1622,13 @@ body::after {
     }
     
     .heading {
-        font-size: clamp(0.8rem, 2.2vw, 1rem);
+        font-size: clamp(1rem, 2.2vw, 1rem);
         line-height: 1;
     }
     
     .pokeball {
-        width: clamp(1.4rem, 2.8vw, 1.6rem);
-        height: clamp(1.4rem, 2.8vw, 1.6rem);
+        width: clamp(1.1rem, 2.2vw, 1.3rem);
+        height: clamp(1.1rem, 2.2vw, 1.3rem);
     }
     
     .hamburger-menu {
